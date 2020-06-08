@@ -25,6 +25,22 @@ class UserController extends Controller
         return ( Auth::check() ? response()->json(true) : response()->json(false) );
     }
 
+    public function authin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["auth"=>false],202);
+        }
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return response()->json(["auth"=>true],202);
+        }
+        return response()->json(["auth"=>false],202);    
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -6,16 +6,15 @@
           <h2>Welcome back!</h2>
           <h4>Please sign in to continue</h4>
 
-          <form method="POST" action="">
-            <input type="hidden" name="action" value="auth-in">
+          <form @submit.prevent="authuser">
             <input type="hidden" name="_token" :value="csrf">
             <div class="form-group">
               <label>Username</label>
-              <input type="text" class="form-control" name="username" placeholder="Enter your username" value="" required>
+              <input type="text" class="form-control" v-model="user.username" placeholder="Enter your username" value="" required>
             </div><!-- form-group -->
             <div class="form-group">
               <label>Password</label>
-              <input type="password" class="form-control" name="password"  placeholder="Enter your password" value="" required>
+              <input type="password" class="form-control" v-model="user.password"  placeholder="Enter your password" value="" required>
             </div><!-- form-group -->
             <button class="btn btn-az-primary btn-block">Sign In</button>
           </form>
@@ -28,12 +27,36 @@
     </div><!-- az-signin-wrapper -->
 </template>
 <script>
+    import FormAlert from './FormAlert.vue';
     export default {
         data: () => ({
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            user:{},
+            error:{
+                auth : {"status":false,"message":""},
+            },
         }),
         mounted() {
             console.log('Authin_Wrapper mounted.')
+        },
+        methods: {
+            authuser(){
+                let uri = '/api/users/authin';
+                this.axios.post(uri, this.user).then((response) => {
+                    console.log(response);
+                    for ( var property in response.data ) {
+                        console.log( property );
+                        this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
+                        this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property][0] : '' );
+                    }
+                    if(response.status === 200){
+                        this.$router.push("auth-in");
+                    }
+                });
+            }
+        },
+        components: {
+            'form-alert': FormAlert
         }
     }
 </script>

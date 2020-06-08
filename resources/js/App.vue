@@ -27,7 +27,7 @@
             this.$nextTick(() => {
                 let uri = '/api/users/authstatus';
                 this.axios.get(uri).then(response => {
-                    //console.log(response.data);
+                    console.log(response.data);
                     this.auth = response.data;
                     if(this.auth){
                         //this.$router.push({ path: 'dashboard' });

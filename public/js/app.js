@@ -1943,7 +1943,7 @@ __webpack_require__.r(__webpack_exports__);
       var uri = '/api/users/authstatus';
 
       _this.axios.get(uri).then(function (response) {
-        //console.log(response.data);
+        console.log(response.data);
         _this.auth = response.data;
 
         if (_this.auth) {//this.$router.push({ path: 'dashboard' });
@@ -1972,6 +1972,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FormAlert_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormAlert.vue */ "./resources/js/components/FormAlert.vue");
 //
 //
 //
@@ -2000,15 +2001,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      user: {},
+      error: {
+        auth: {
+          "status": false,
+          "message": ""
+        }
+      }
     };
   },
   mounted: function mounted() {
     console.log('Authin_Wrapper mounted.');
+  },
+  methods: {
+    authuser: function authuser() {
+      var _this = this;
+
+      var uri = '/api/users/authin';
+      this.axios.post(uri, this.user).then(function (response) {
+        console.log(response);
+
+        for (var property in response.data) {
+          console.log(property);
+          _this.error[property].status = typeof response.data[property] != "undefined" ? true : false;
+          _this.error[property].message = typeof response.data[property] != "undefined" ? response.data[property][0] : '';
+        }
+
+        if (response.status === 200) {
+          _this.$router.push("auth-in");
+        }
+      });
+    }
+  },
+  components: {
+    'form-alert': _FormAlert_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -38440,28 +38471,93 @@ var render = function() {
         _vm._v(" "),
         _c("h4", [_vm._v("Please sign in to continue")]),
         _vm._v(" "),
-        _c("form", { attrs: { method: "POST", action: "" } }, [
-          _c("input", {
-            attrs: { type: "hidden", name: "action", value: "auth-in" }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            attrs: { type: "hidden", name: "_token" },
-            domProps: { value: _vm.csrf }
-          }),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-az-primary btn-block" }, [
-            _vm._v("Sign In")
-          ])
-        ])
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.authuser($event)
+              }
+            }
+          },
+          [
+            _c("input", {
+              attrs: { type: "hidden", name: "_token" },
+              domProps: { value: _vm.csrf }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Username")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.username,
+                    expression: "user.username"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Enter your username",
+                  value: "",
+                  required: ""
+                },
+                domProps: { value: _vm.user.username },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "username", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Password")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.password,
+                    expression: "user.password"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "password",
+                  placeholder: "Enter your password",
+                  value: "",
+                  required: ""
+                },
+                domProps: { value: _vm.user.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.user, "password", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-az-primary btn-block" }, [
+              _vm._v("Sign In")
+            ])
+          ]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "az-signin-footer" }, [
-        _vm._m(3),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "p",
@@ -38487,44 +38583,6 @@ var staticRenderFns = [
       _vm._v("a"),
       _c("span", [_vm._v("rti")]),
       _vm._v("cles")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Username")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "username",
-          placeholder: "Enter your username",
-          value: "",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Password")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "password",
-          name: "password",
-          placeholder: "Enter your password",
-          value: "",
-          required: ""
-        }
-      })
     ])
   },
   function() {

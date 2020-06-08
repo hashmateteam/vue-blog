@@ -16,24 +16,27 @@
           <h2>Get Started</h2>
           <h4>It's free to signup and only takes a minute.</h4>
 
-          <form action="./control/" method="post">
+          <form @submit.prevent="adduser">
           <input type="hidden" name="_token" :value="csrf">
-          <input type="hidden" name="action" value="auth-up">
             <div class="form-group">
               <label>Firstname &amp; Lastname</label>
-              <input type="text" class="form-control" name="name" placeholder="Enter your firstname and lastname">
+              <input type="text" class="form-control" v-model="user.name" placeholder="Enter your firstname and lastname">
+              <form-alert v-if="error.name.status" :message="error.name.message"></form-alert>
             </div><!-- form-group -->
             <div class="form-group">
               <label>Email</label>
-              <input type="email" class="form-control" name="email" placeholder="Enter your email">
+              <input type="email" class="form-control" v-model="user.email" placeholder="Enter your email">
+              <form-alert v-if="error.email.status" :message="error.email.message"></form-alert>
             </div><!-- form-group -->
             <div class="form-group">
               <label>Username</label>
-              <input type="text" class="form-control" name="username" placeholder="Enter unique username">
+              <input type="text" class="form-control" v-model="user.username" placeholder="Enter unique username">
+              <form-alert v-if="error.username.status" :message="error.username.message"></form-alert>
             </div><!-- form-group -->
             <div class="form-group">
               <label>Password</label>
-              <input type="password" class="form-control" name="password" placeholder="Enter your password">
+              <input type="password" class="form-control" v-model="user.password" placeholder="Enter your password">
+              <form-alert v-if="error.password.status" :message="error.password.message"></form-alert>
             </div><!-- form-group -->
             <label class="az-content-label tx-11 tx-medium tx-gray-600">Contact</label>
             <div class="input-group" style="margin-bottom:10px;">
@@ -42,24 +45,53 @@
                   <i class="typcn typcn-phone-outline tx-24 lh--9 op-6"></i>
                 </div>
               </div><!-- input-group-prepend -->
-              <input id="phoneMask" name="mobile" type="text" class="form-control" placeholder="(9999) 9999999">
+              <input id="phoneMask" v-model="user.contact" type="text" class="form-control" placeholder="(9999) 9999999">
             </div><!-- input-group -->
+            <form-alert v-if="error.contact.status" :message="error.contact.message"></form-alert>
             <button class="btn btn-az-primary btn-block">Create Account</button>
           </form>
         </div><!-- az-signup-header -->
         <div class="az-signup-footer">
-          <p>Already have an account? <a href="./login">Sign In</a></p>
+          <p>Already have an account? <router-link to="/auth-in">Login</router-link></p>
         </div><!-- az-signin-footer -->
       </div><!-- az-column-signup -->
     </div><!-- az-signup-wrapper -->
 </template>
 <script>
+    import FormAlert from './FormAlert.vue';
     export default {
         data: () => ({
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            user:{},
+            error:{
+                    name : {"status":false,"message":""},
+                    email : {"status":false,"message":""},
+                    username : {"status":false,"message":""},
+                    password : {"status":false,"message":""},
+                    contact : {"status":false,"message":""}
+            }
         }),
         mounted() {
             console.log('Authup_Wrapper mounted.')
+        },
+        methods: {
+            adduser(){
+                let uri = '/api/users/authup';
+                this.axios.post(uri, this.user).then((response) => {
+                    console.log(response);
+                    for ( var property in response.data ) {
+                        console.log( property );
+                        this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
+                        this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property][0] : '' );
+                    }
+                    if(response.status === 200){
+                        this.$router.push("auth-in");
+                    }
+                });
+            }
+        },
+        components: {
+            'form-alert': FormAlert
         }
     }
 </script>

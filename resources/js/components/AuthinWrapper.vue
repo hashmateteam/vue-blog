@@ -22,7 +22,7 @@
         </div><!-- az-signin-header -->
         <div class="az-signin-footer">
           <p><a href="">Forgot password?</a></p>
-          <p>Don't have an account? <a href="./register">Create an Account</a></p>
+          <p>Don't have an account? <router-link to="/auth-up">Create an Account</router-link></p>
         </div><!-- az-signin-footer -->
       </div><!-- az-card-signin -->
     </div><!-- az-signin-wrapper -->

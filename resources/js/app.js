@@ -21,6 +21,9 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component('authin-wrapper', require('./components/AuthinWrapper.vue').default);
+Vue.component('authup-wrapper', require('./components/AuthupWrapper.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

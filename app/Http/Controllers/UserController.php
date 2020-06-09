@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\UserCollection;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,13 +15,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return ( Auth::check() ? response()->json(true) : response()->json(false) );
-        //return new UserCollection(User::all());
-    }
     
     public function auth(){
+        if(Auth::check()){
+            return response()->json(true);
+        }
         return ( Auth::check() ? response()->json(true) : response()->json(false) );
     }
 
@@ -33,12 +31,12 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(["auth"=>false],202);
         }
-        $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials)) {
+        $credentials = ['username' => $request->get('username'),'password' => $request->get('password')];
+        if (Auth::attempt($credentials,$request->get('remember'))) {
             // Authentication passed...
-            return response()->json(["auth"=>true],202);
+            return response()->json(["user"=>Auth::user()->name . " has been logged in." ],200);
         }
-        return response()->json(["auth"=>false],202);    
+        return response()->json(["auth"=>"Login failed"],202);
     }
 
     /**
@@ -74,7 +72,7 @@ class UserController extends Controller
             'name' => $request->get('name'),
             'username' => $request->get('username'),
             'email' => $request->get('email'),
-            'password' => $request->get('password'),
+            'password' => Hash::make($request->get('password')),
             'contact' => $request->get('contact'),
           ]);
           return response()->json($user->save());

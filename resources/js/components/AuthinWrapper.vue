@@ -16,8 +16,12 @@
               <label>Password</label>
               <input type="password" class="form-control" v-model="user.password"  placeholder="Enter your password" value="" required>
             </div><!-- form-group -->
+            <label class="ckbox">
+                <input type="checkbox" @change="check()"><span>Remember me</span>
+            </label>
             <button class="btn btn-az-primary btn-block">Sign In</button>
           </form>
+          <form-alert v-if="error.auth.status" :message="error.auth.message"></form-alert>
         </div><!-- az-signin-header -->
         <div class="az-signin-footer">
           <p><a href="">Forgot password?</a></p>
@@ -37,7 +41,8 @@
             },
         }),
         mounted() {
-            console.log('Authin_Wrapper mounted.')
+            console.log('Authin_Wrapper mounted.');
+            this.user.remember = false;
         },
         methods: {
             authuser(){
@@ -47,12 +52,19 @@
                     for ( var property in response.data ) {
                         console.log( property );
                         this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
-                        this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property][0] : '' );
+                        this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property] : '' );
                     }
                     if(response.status === 200){
                         this.$router.push("auth-in");
                     }
                 });
+            },
+            check(){
+              if(this.user.remember){
+                this.user.remember = false;
+              }else{
+                this.user.remember = true;
+              }
             }
         },
         components: {

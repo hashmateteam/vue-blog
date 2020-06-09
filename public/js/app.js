@@ -1933,24 +1933,32 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-      auth: false
+      auth: false,
+      token: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     this.$nextTick(function () {
-      var uri = '/api/users/authstatus';
+      var uri = '/api/authcx';
+      var config = {
+        headers: {
+          'Authorization': 'Bearer ' + _this.token,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        }
+      };
 
-      _this.axios.get(uri).then(function (response) {
+      _this.axios.post(uri, '', config).then(function (response) {
         console.log(response);
-        _this.auth = response.data;
-
-        if (_this.auth) {//this.$router.push({ path: 'dashboard' });
-        } else {
-          _this.$router.push({
-            path: 'auth-in'
-          });
+      })["catch"](function (error) {
+        if (error.response) {
+          if (error.response.status === 401) {
+            _this.$router.push({
+              path: 'auth-in'
+            });
+          }
         }
       });
     });
@@ -2016,7 +2024,8 @@ __webpack_require__.r(__webpack_exports__);
           "status": false,
           "message": ""
         }
-      }
+      },
+      token: ''
     };
   },
   mounted: function mounted() {
@@ -2027,18 +2036,20 @@ __webpack_require__.r(__webpack_exports__);
     authuser: function authuser() {
       var _this = this;
 
-      var uri = '/api/users/authin';
+      var uri = '/api/authin';
       this.axios.post(uri, this.user).then(function (response) {
         console.log(response);
+
+        if (response.status === 200) {
+          _this.token = response.data.success.token;
+
+          _this.$router.push("auth-up");
+        }
 
         for (var property in response.data) {
           console.log(property);
           _this.error[property].status = typeof response.data[property] != "undefined" ? true : false;
           _this.error[property].message = typeof response.data[property] != "undefined" ? response.data[property] : '';
-        }
-
-        if (response.status === 200) {
-          _this.$router.push("auth-in");
         }
       });
     },
@@ -2163,7 +2174,7 @@ __webpack_require__.r(__webpack_exports__);
     adduser: function adduser() {
       var _this = this;
 
-      var uri = '/api/users/authup';
+      var uri = '/api/authup';
       this.axios.post(uri, this.user).then(function (response) {
         console.log(response);
 
@@ -54401,13 +54412,19 @@ var routes = [{
   path: '/auth-up',
   component: _components_AuthupWrapper_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }];
+var authorization = {
+  token: ''
+};
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: routes
 });
 var app = new Vue(Vue.util.extend({
   router: router
-}, _App_vue__WEBPACK_IMPORTED_MODULE_3__["default"])).$mount('#app');
+}, _App_vue__WEBPACK_IMPORTED_MODULE_3__["default"])).$mount({
+  el: '#app',
+  authorization: authorization
+});
 
 /***/ }),
 
@@ -54750,8 +54767,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\laravel\blog\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\laravel\blog\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\laravel\vue-blog\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\laravel\vue-blog\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

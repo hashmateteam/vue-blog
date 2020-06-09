@@ -76,7 +76,7 @@
         },
         methods: {
             adduser(){
-                let uri = '/api/users/authup';
+                let uri = '/api/authup';
                 this.axios.post(uri, this.user).then((response) => {
                     console.log(response);
                     for ( var property in response.data ) {

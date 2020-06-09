@@ -51,6 +51,8 @@ const routes = [
         component: AuthupWrapper
     },
   ];
-  
+  var authorization = {
+      token: ''
+  };
   const router = new VueRouter({ mode: 'history', routes: routes});
-  const app = new Vue(Vue.util.extend({ router }, App)).$mount('#app');
+  const app = new Vue(Vue.util.extend({ router }, App)).$mount({el:'#app',authorization:authorization});

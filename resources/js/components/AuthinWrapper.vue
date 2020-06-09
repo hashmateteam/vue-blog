@@ -39,6 +39,7 @@
             error:{
                 auth : {"status":false,"message":""},
             },
+            token: ''
         }),
         mounted() {
             console.log('Authin_Wrapper mounted.');
@@ -46,17 +47,19 @@
         },
         methods: {
             authuser(){
-                let uri = '/api/users/authin';
+                let uri = '/api/authin';
                 this.axios.post(uri, this.user).then((response) => {
                     console.log(response);
+                    if(response.status === 200){
+                        this.token = response.data.success.token;
+                        this.$router.push("auth-up");
+                    }
                     for ( var property in response.data ) {
                         console.log( property );
                         this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
                         this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property] : '' );
                     }
-                    if(response.status === 200){
-                        this.$router.push("auth-in");
-                    }
+                    
                 });
             },
             check(){

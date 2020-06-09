@@ -20,19 +20,27 @@
     import AuthupWrapper from './components/AuthupWrapper.vue';
     export default{
         data: () => ({
-            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            auth: false
+            csrf  : document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            auth  : false,
+            token : ''
         }),
         mounted(){
             this.$nextTick(() => {
-                let uri = '/api/users/authstatus';
-                this.axios.get(uri).then(response => {
+                let uri = '/api/authcx';
+                let config = {
+                    headers: {
+                        'Authorization' : 'Bearer ' + this.token,
+                        'Content-Type' : 'application/x-www-form-urlencoded',
+                        'Accept' : 'application/json'
+                    }
+                }
+                this.axios.post(uri,'',config).then(response => {
                     console.log(response);
-                    this.auth = response.data;
-                    if(this.auth){
-                        //this.$router.push({ path: 'dashboard' });
-                    }else{
-                        this.$router.push({ path: 'auth-in' });
+                }).catch((error) => {
+                    if (error.response) {
+                        if(error.response.status === 401){
+                            this.$router.push({ path: 'auth-in' });
+                        }
                     }
                 });
             });

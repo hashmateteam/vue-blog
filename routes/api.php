@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users/authstatus', 'UserController@auth');
-Route::post('/users/authup', 'UserController@store');
-Route::post('/users/authin', 'UserController@authin');
-//Route::get('/post/edit/{id}', 'PostController@edit');
-//Route::post('/post/update/{id}', 'PostController@update');
-//Route::delete('/post/delete/{id}', 'PostController@delete');
+Route::post('authin', 'API\UserController@authin');
+Route::post('authup', 'API\UserController@authup');
+
+Route::group(['middleware' => 'auth:api'], function(){
+      Route::post('authcx', 'API\UserController@authcx');
+});

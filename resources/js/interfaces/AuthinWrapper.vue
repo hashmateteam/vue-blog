@@ -31,7 +31,7 @@
     </div><!-- az-signin-wrapper -->
 </template>
 <script>
-    import FormAlert from './FormAlert.vue';
+    import FormAlert from '../components/FormAlert.vue';
     export default {
         data: () => ({
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

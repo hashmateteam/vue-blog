@@ -6,41 +6,29 @@
 
 require('./bootstrap');
 
+//Initialize Vue in window of browser
 window.Vue = require('vue');
 
+//Importing basic libraries
 import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 
+//Use or intitalize the basic libraries
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
+//Shared State Veux store
 import store from "./store";
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+//Components
+import AuthinWrapper from './interfaces/AuthinWrapper.vue';
+import AuthupWrapper from './interfaces/AuthupWrapper.vue';
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-//Vue.component('authin-wrapper', require('./components/AuthinWrapper.vue').default);
-//Vue.component('authup-wrapper', require('./components/AuthupWrapper.vue').default);
-import AuthinWrapper from './components/AuthinWrapper.vue';
-import AuthupWrapper from './components/AuthupWrapper.vue';
+//Pages
 import Index from './pages/Index.vue';
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+//Declare static-routes
 const routes = [
     {
         name: 'authin',
@@ -59,5 +47,8 @@ const routes = [
     }
   ];
 
+  //make VueRouter by routes-array
   const router = new VueRouter({ mode: 'history', routes: routes});
+  
+  //Initialize the Vue app 
   const app = new Vue(Vue.util.extend({ router , store }, Index)).$mount('#app');

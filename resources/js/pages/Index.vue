@@ -1,9 +1,7 @@
-// App.vue
+// Index.vue
 
 <template>
-    <transition name="fade">
-        <router-view></router-view>
-    </transition>
+    <nav-bar></nav-bar>
 </template>
 
 <style>
@@ -16,6 +14,7 @@
 </style>
 
 <script>
+    import NavigationBar from '../components/NavigationBar.vue';
     import GuestIndex from './guest/Index.vue';
     export default{
         data: () => ({
@@ -23,8 +22,13 @@
         }),
         mounted(){
             this.$nextTick(() => {
+                this.$router.addRoutes([{
+                    name: 'guestindex',
+                    path: '/',
+                    component: GuestIndex
+                }]);
                 console.log("MAIN INDEX MOUNTED");
-                //this.$router.push({ component: GuestIndex });
+                this.$router.push({ name: 'guestindex' });
                 /* after clicking login button
                 var authorization = this.$store.getters.get_token;
                 if(!authorization){
@@ -34,7 +38,8 @@
             });
         },
         components: {
-            'guest-index': GuestIndex
+            'guest-index': GuestIndex,
+            'nav-bar'    : NavigationBar
         }
     }
 </script>

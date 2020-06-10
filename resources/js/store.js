@@ -1,0 +1,50 @@
+import Vue from "vue";
+import Vuex from "vuex";
+
+Vue.use(Vuex);
+
+const state = {
+    authorization : {
+        token  : '',
+        name   : 'Authorization',
+        type   : 'Bearer ',
+        status : false
+    },
+    xhr_request : {
+        headers: {
+            'Authorization' :  '',
+            'Content-Type' : 'application/x-www-form-urlencoded',
+            'Accept' : 'application/json'
+        }
+    }
+};
+
+const mutations = {
+  UPDATE_TOKEN(state, payload) {
+    state.authorization.token = payload;
+    state.authorization.status = true;
+    state.xhr_request.headers.Authorization = state.authorization.type + state.authorization.token;
+  }
+};
+
+const actions = {
+  update_token(context, value) {
+    context.commit("UPDATE_TOKEN", value);
+  }
+};
+
+const getters = {
+  get_token(state) {
+    return state.authorization.token;
+  },
+  get_auth(state){
+    return state.authorization;
+  }
+};
+
+export default new Vuex.Store({
+  state,
+  mutations,
+  actions,
+  getters
+});

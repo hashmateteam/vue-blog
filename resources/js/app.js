@@ -9,13 +9,13 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
-Vue.use(VueRouter);
-
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 
-import App from './App.vue';
+Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+
+import store from "./store";
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,12 +28,14 @@ Vue.use(VueAxios, axios);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 //Vue.component('authin-wrapper', require('./components/AuthinWrapper.vue').default);
 //Vue.component('authup-wrapper', require('./components/AuthupWrapper.vue').default);
 import AuthinWrapper from './components/AuthinWrapper.vue';
 import AuthupWrapper from './components/AuthupWrapper.vue';
+import Index from './pages/Index.vue';
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50,9 +52,12 @@ const routes = [
         path: '/auth-up',
         component: AuthupWrapper
     },
+    {
+        name: 'index',
+        path: '/',
+        component: Index
+    }
   ];
-  var authorization = {
-      token: ''
-  };
+
   const router = new VueRouter({ mode: 'history', routes: routes});
-  const app = new Vue(Vue.util.extend({ router }, App)).$mount({el:'#app',authorization:authorization});
+  const app = new Vue(Vue.util.extend({ router , store }, Index)).$mount('#app');

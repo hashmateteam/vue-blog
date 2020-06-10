@@ -1,7 +1,7 @@
 <template>
     <span>
     <br>
-    <div class="alert alert-solid-danger mg-b-0"  role="alert">
+    <div class="alert mg-b-0" :class="danger ? 'alert-solid-danger' : 'alert-solid-success'"  role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">×</span>
         </button>
@@ -12,7 +12,7 @@
 </template>
 <script>
     export default {
-        props: ['message'],
+        props: ['message','danger'],
         mounted() {
             console.log('FormAlert mounted.')
         }

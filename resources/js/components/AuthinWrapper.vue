@@ -21,7 +21,7 @@
             </label>
             <button class="btn btn-az-primary btn-block">Sign In</button>
           </form>
-          <form-alert v-if="error.auth.status" :message="error.auth.message"></form-alert>
+          <form-alert v-if="error.auth.status" :message="error.auth.message" :danger="error.auth.type"></form-alert>
         </div><!-- az-signin-header -->
         <div class="az-signin-footer">
           <p><a href="">Forgot password?</a></p>
@@ -37,9 +37,8 @@
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             user:{},
             error:{
-                auth : {"status":false,"message":""},
+                auth : {"status":false,"message":"","type":true},
             },
-            token: ''
         }),
         mounted() {
             console.log('Authin_Wrapper mounted.');
@@ -51,11 +50,14 @@
                 this.axios.post(uri, this.user).then((response) => {
                     console.log(response);
                     if(response.status === 200){
-                        this.token = response.data.success.token;
+                        this.$store.dispatch("update_token", String(response.data.success.token));
+                        this.error.auth.type = false;
+                        this.error.auth.status = true;
+                        this.error.auth.message = "logging you in";
                         this.$router.push("auth-up");
                     }
                     for ( var property in response.data ) {
-                        console.log( property );
+                        this.error[property].type = ( typeof response.data[property] != "undefined" ? true : false );
                         this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
                         this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property] : '' );
                     }

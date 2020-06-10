@@ -39,6 +39,9 @@ const getters = {
   },
   get_auth(state){
     return state.authorization;
+  },
+  get_headers(state){
+    return state.xhr_request;
   }
 };
 

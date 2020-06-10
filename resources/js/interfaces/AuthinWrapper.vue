@@ -51,17 +51,15 @@
                     console.log(response);
                     if(response.status === 200){
                         this.$store.dispatch("update_token", String(response.data.success.token));
-                        this.error.auth.type = false;
-                        this.error.auth.status = true;
-                        this.error.auth.message = "logging you in";
+                        console.log(this.$store.getters.get_token);
                         this.$router.push("auth-up");
+                    }else{
+                      for ( var property in response.data ) {
+                          this.error[property].type = ( typeof response.data[property] != "undefined" ? true : false );
+                          this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
+                          this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property] : '' );
+                      }
                     }
-                    for ( var property in response.data ) {
-                        this.error[property].type = ( typeof response.data[property] != "undefined" ? true : false );
-                        this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
-                        this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property] : '' );
-                    }
-                    
                 });
             },
             check(){

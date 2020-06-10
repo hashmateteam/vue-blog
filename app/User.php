@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return Hash::check($password, $this->password);
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class)->orderBy('created_at', 'DESC');
+    }
 }

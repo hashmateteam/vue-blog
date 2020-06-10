@@ -70,11 +70,8 @@
                 <h6>Aziana Pechon</h6>
                 <span>Premium Member</span>
               </div><!-- az-header-profile -->
-
-              <a href="" class="dropdown-item"><i class="fas fa-user-outline"></i> My Profile</a>
-              <a href="" class="dropdown-item"><i class="fas fa-edit"></i> Edit Profile</a>
-              <a href="" class="dropdown-item"><i class="fas fa-time"></i> Activity Logs</a>
-              <a href="" class="dropdown-item"><i class="fas fa-cog-outline"></i> Account Settings</a>
+              <router-link to="/auth-in" class="nav-link"><i class="fas fa-user"></i>Login</router-link>
+              <router-link to="/auth-up" class="nav-link"><i class="fas fa-users"></i>Register</router-link>
               <a href="page-signin.html" class="dropdown-item"><i class="fas fa-power-outline"></i> Sign Out</a>
             </div><!-- dropdown-menu -->
           </div>

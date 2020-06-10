@@ -1,7 +1,12 @@
 // Index.vue
 
 <template>
-    <nav-bar></nav-bar>
+    <div>
+        <nav-bar></nav-bar>
+        <transition name="fade">
+        <router-view></router-view>
+        </transition>
+    </div>
 </template>
 
 <style>
@@ -24,7 +29,7 @@
             this.$nextTick(() => {
                 this.$router.addRoutes([{
                     name: 'guestindex',
-                    path: '/',
+                    path: '/@articles',
                     component: GuestIndex
                 }]);
                 console.log("MAIN INDEX MOUNTED");
@@ -36,6 +41,17 @@
                 }
                 */
             });
+        },
+        methods: {
+            authcx(){
+                let uri = '/api/authcx';
+                this.axios.post(uri, '',this.$store.getters.get_headers).then((response) => {
+                    console.log(response);
+                    if(response.status === 200){
+                        console.log(response);
+                    }
+                });
+            }
         },
         components: {
             'guest-index': GuestIndex,

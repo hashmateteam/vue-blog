@@ -73,6 +73,7 @@
         }),
         mounted() {
             console.log('Authup_Wrapper mounted.')
+            console.log(this.$store.getters.get_headers);
         },
         methods: {
             adduser(){

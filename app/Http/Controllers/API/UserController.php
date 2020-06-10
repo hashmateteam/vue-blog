@@ -67,7 +67,11 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response 
     */  
     public function authcx() 
-    { 
-        return ( Auth::check() ? response()->json(true) : response()->json(false) );
+    {   if(Auth::check()){
+            return response()->json(true);
+            //return response()->json(auth()->user()->articles()->latest()->paginate(5));
+        }else{
+           return response()->json(false);
+        }
     } 
 }

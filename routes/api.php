@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('authin', 'API\UserController@authin');
 Route::post('authup', 'API\UserController@authup');
+Route::get('articles', 'API\ArticleController@index');
 
 Route::group(['middleware' => 'auth:api'], function(){
       Route::post('authcx', 'API\UserController@authcx');

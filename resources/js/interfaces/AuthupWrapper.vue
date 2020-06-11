@@ -73,27 +73,27 @@
         }),
         mounted() {
             this.$nextTick(() => {
-               console.log("mounting authup");
-               console.log((!(this.$store.getters.get_auth).status));
+               //console.log("mounting authup");
+               //console.log((!(this.$store.getters.get_auth).status));
                 if((this.$store.getters.get_auth).status){
                   this.$router.push({ path: '/' });
                 }
             });
-            console.log('Authup_Wrapper mounted.')
-            console.log(this.$store.getters.get_headers);
+            //console.log('Authup_Wrapper mounted.')
+            //console.log(this.$store.getters.get_headers);
         },
         methods: {
             adduser(){
                 let uri = '/api/authup';
                 this.axios.post(uri, this.user).then((response) => {
-                    console.log(response);
+                    //console.log(response);
                     for ( var property in response.data ) {
-                        console.log( property );
+                        //console.log( property );
                         this.error[property].status = ( typeof response.data[property] != "undefined" ? true : false );
                         this.error[property].message = ( typeof response.data[property] != "undefined" ? response.data[property][0] : '' );
                     }
                     if(response.status === 200){
-                        this.$router.push("auth-in");
+                        this.$router.push("/");
                     }
                 });
             }

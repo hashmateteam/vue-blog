@@ -42,25 +42,28 @@
         }),
         mounted() {
              this.$nextTick(() => {
-               console.log("mounting authin");
-               console.log((!(this.$store.getters.get_auth).status));
+               //console.log("mounting authin");
+               //console.log((!(this.$store.getters.get_auth).status));
                 if((this.$store.getters.get_auth).status){
                   this.$router.push({ path: '/' });
                 }
             });
-            console.log('Authin_Wrapper mounted.');
+            //console.log('Authin_Wrapper mounted.');
             this.user.remember = false;
         },
         methods: {
             authuser(){
                 let uri = '/api/authin';
                 this.axios.post(uri, this.user).then((response) => {
-                    console.log(response);
+                    //console.log(response);
                     if(response.status === 200){
                         this.$store.dispatch("update_token", String(response.data.success.token));
                         this.$store.dispatch("update_auth_user", Object(response.data.user));
                         this.$cookie.set("authentication_token",response.data.success.token);
-                        console.log(this.$store.getters.get_token);
+                        this.$cookie.set("auth_user",JSON.stringify(response.data.user));
+                        //console.log(this.$store.getters.get_token);
+                        //console.log(response.data.user);
+                        //console.log(this.$store.getters.get_auth_user);
                         this.$router.push({ path:'/' });
                     }else{
                       for ( var property in response.data ) {

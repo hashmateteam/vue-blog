@@ -6,7 +6,7 @@
           <a href="" id="azNavShow" class="az-header-menu-icon d-lg-none"><span></span></a>
         </div><!-- az-header-left -->
         <div class="az-navbar az-navbar-three">
-          <div><router-link to="/@articles" class="az-logo">a<span>rti</span>cles</router-link></div>
+          <div></div>
           <ul class="nav">
             <!-- add menu if you want -->
           </ul><!-- nav -->
@@ -18,10 +18,10 @@
               <div class="az-dropdown-header d-sm-none">
                 <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
               </div>
-              <header-profile v-if="auth"></header-profile>
-              <router-link to="/auth-in" v-if="notLogin" class="dropdown-item"><i class="fas fa-lock-open"></i> Login</router-link>
-              <router-link to="/auth-up" v-if="notLogin" class="dropdown-item"><i class="fas fa-user"></i> Register</router-link>
-              <button class="dropdown-item" @click="logout()"><i class="fas fa-power"></i> Sign Out</button>
+              <header-profile v-if="auth" v-bind:key="header_profile"></header-profile>
+              <router-link to="/auth-in" v-if="notLogin" class="dropdown-item" v-bind:key="authin"><i class="fas fa-lock-open"></i> Login</router-link>
+              <router-link to="/auth-up" v-if="notLogin" class="dropdown-item" v-bind:key="authup"><i class="fas fa-user"></i> Register</router-link>
+              <button class="dropdown-item" @click="logout()" v-if="!notLogin"><i class="fas fa-power"></i> Sign Out</button>
             </div><!-- dropdown-menu -->
           </div>
         </div><!-- az-header-right -->
@@ -32,8 +32,11 @@
     import HeaderProfile from "./HeaderProfile.vue";
     export default {
         data : () => ({
-          auth : true,
-          notLogin : true
+          auth : false,
+          notLogin : true,
+          authin : '1',
+          authup : '2',
+          header_profile : '3'
         }),
         props: [],
         components : {
@@ -42,30 +45,31 @@
         methods : {
           logout(){
             this.$cookie.delete("authentication_token");
-            this.$router.push({ path: '/' });
+            if (this.$route.path !== '/@articles') this.$router.push('/@articles')
             this.$store.dispatch("reset_token" ,Boolean(true));
+            this.notLogin = true;
+            this.auth = false;
+            this.authin = Math.random();
+            this.authup = Math.random();
+            this.header_profile = Math.random();
           }
         },
         mounted() {
           this.$nextTick(() => {
-               console.log("mounting navigation");
-               console.log((!(this.$store.getters.get_auth).status));
+               //console.log("mounting navigation");
+               //console.log((!(this.$store.getters.get_auth).status));
                 if((this.$store.getters.get_auth).status){
-                  console.log("notLogin on mounting of navigation bar");
-                  console.log(this.notLogin);
+                  //console.log("notLogin on mounting of navigation bar");
+                  //console.log(this.notLogin);
                   this.notLogin = false;
-                  console.log("notLogin after change of navigation bar");
-                  console.log(this.notLogin);
+                  //console.log("notLogin after change of navigation bar");
+                  //console.log(this.notLogin);
                 }
+                this.auth = this.$store.getters.get_auth.status;
+                console.log('Navigation NEXTTICK CALLED');
           });
-          var user = this.$store.getters.get_auth_user;
-          if(typeof user.id != "undefined"){
-            this.auth = true;
-          }else{
-            this.auth = false;
-          }
-          
-          console.log('NavBar.vue mounted.');
+          //console.log('NavBar.vue mounted.');
+          //console.log(this.$store.getters.get_auth.status);
           $(function(){
             'use strict'
 

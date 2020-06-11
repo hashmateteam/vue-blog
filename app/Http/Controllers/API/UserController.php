@@ -57,9 +57,8 @@ class UserController extends Controller {
         $input = $request->all(); 
         $input['password'] = bcrypt($input['password']); 
         $user = User::create($input);
-        $success['token'] =  $user->createToken('authin')-> accessToken; 
-        $success['name'] =  $user->name;
-        return response()->json(['success'=>$success], $this->successStatus); 
+        $success['token'] =  $user->createToken('authin')-> accessToken;
+        return response()->json(['success'=>$success,'user'=>Auth::user()], $this->successStatus); 
     }
     /** 
      * any api function

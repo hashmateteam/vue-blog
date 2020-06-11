@@ -15,8 +15,8 @@
         }),
         mounted(){
             this.user = this.$store.getters.get_auth_user;
-            console.log("Header Profile MOUNTED");
-            console.log(this.user);
+            //console.log("Header Profile MOUNTED");
+            //console.log(this.user);
         }
     }
 </script>

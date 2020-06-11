@@ -27,6 +27,8 @@
         }),
         mounted(){
             this.$nextTick(() => {
+                console.log("STORE AUTH OBJECT");
+                console.log(this.$store.getters.get_auth);
                 this.$router.addRoutes([{
                     name: 'guestindex',
                     path: '/@articles',

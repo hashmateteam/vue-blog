@@ -14,7 +14,7 @@
         data: () => ({
             csrf  : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }),
-        props : ['key','title','description'],
+        props : ['title','description'],
         mounted(){
             console.log(this.props);
             console.log("MEDIA OBJECT MOUNTED");

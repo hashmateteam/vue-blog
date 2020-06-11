@@ -31,7 +31,7 @@ class UserController extends Controller {
             // Authentication passed...
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('authin')->accessToken; 
-            return response()->json(['success' => $success],$this->successStatus);
+            return response()->json(['success' => $success,'user'=>$user],$this->successStatus);
         }
         return response()->json(["auth"=>"There is some problem in your credentials"],202); 
     }

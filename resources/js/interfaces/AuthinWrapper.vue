@@ -41,6 +41,13 @@
             },
         }),
         mounted() {
+             this.$nextTick(() => {
+               console.log("mounting authin");
+               console.log((!(this.$store.getters.get_auth).status));
+                if((this.$store.getters.get_auth).status){
+                  this.$router.push({ path: '/' });
+                }
+            });
             console.log('Authin_Wrapper mounted.');
             this.user.remember = false;
         },
@@ -51,8 +58,10 @@
                     console.log(response);
                     if(response.status === 200){
                         this.$store.dispatch("update_token", String(response.data.success.token));
+                        this.$store.dispatch("update_auth_user", Object(response.data.user));
+                        this.$cookie.set("authentication_token",response.data.success.token);
                         console.log(this.$store.getters.get_token);
-                        this.$router.push("auth-up");
+                        this.$router.push({ path:'/' });
                     }else{
                       for ( var property in response.data ) {
                           this.error[property].type = ( typeof response.data[property] != "undefined" ? true : false );

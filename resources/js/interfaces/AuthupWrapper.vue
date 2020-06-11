@@ -72,6 +72,13 @@
             }
         }),
         mounted() {
+            this.$nextTick(() => {
+               console.log("mounting authup");
+               console.log((!(this.$store.getters.get_auth).status));
+                if((this.$store.getters.get_auth).status){
+                  this.$router.push({ path: '/' });
+                }
+            });
             console.log('Authup_Wrapper mounted.')
             console.log(this.$store.getters.get_headers);
         },

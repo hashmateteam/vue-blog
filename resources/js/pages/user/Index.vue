@@ -1,5 +1,5 @@
 <template>
-    <div>USER PAGE</div>
+    <div>{{ $route.params.username }}</div>
 </template>
 
 <style>

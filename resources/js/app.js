@@ -39,10 +39,11 @@ import AuthupWrapper from './interfaces/AuthupWrapper.vue';
 //Pages
 import Index from './pages/Index.vue';
 import GuestIndex from './pages/guest/Index.vue';
+import UserIndex from './pages/user/Index';
+import CreateArticle from './pages/user/CreateArticle';
 
 //Declare static-routes
-const routes = [
-    {
+const routes = [{
         name: 'authin',
         path: '/auth-in',
         component: AuthinWrapper
@@ -61,22 +62,32 @@ const routes = [
         name: 'guestindex',
         path: '/@articles',
         component: GuestIndex
+    },
+    {
+        name: 'userindex',
+        path: '/u/@:username',
+        component: UserIndex
+    },
+    {
+        name: 'createarticle',
+        path: '/u/@:username/:xid',
+        component: CreateArticle
     }
-  ];
+];
 
-  //make VueRouter by routes-array
-  const router = new VueRouter({ mode: 'history', routes: routes});
-  
-  //Initialize the Vue app 
-  const app = new Vue(Vue.util.extend({ router , store }, Index)).$mount('#app');
+//make VueRouter by routes-array
+const router = new VueRouter({ mode: 'history', routes: routes });
 
-  //getting token from cookies before loading any component
-  let token = app.$cookie.get("authentication_token");
-    if(token !== null){
-        app.$store.dispatch("update_token",String(token));
-        app.$store.dispatch("update_auth_user", Object(JSON.parse(app.$cookie.get("auth_user"))));
-        //console.log("token recieved from cookies");
-        //console.log(token);
-        //console.log("user object recieved from cookies");
-        //console.log(app.$cookie.get("auth_user"));
-    }
+//Initialize the Vue app 
+const app = new Vue(Vue.util.extend({ router, store }, Index)).$mount('#app');
+
+//getting token from cookies before loading any component
+let token = app.$cookie.get("authentication_token");
+if (token !== null) {
+    app.$store.dispatch("update_token", String(token));
+    app.$store.dispatch("update_auth_user", Object(JSON.parse(app.$cookie.get("auth_user"))));
+    //console.log("token recieved from cookies");
+    //console.log(token);
+    //console.log("user object recieved from cookies");
+    //console.log(app.$cookie.get("auth_user"));
+}

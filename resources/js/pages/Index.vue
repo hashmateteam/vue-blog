@@ -30,8 +30,8 @@
             this.$nextTick(() => {
                 //console.log("STORE AUTH OBJECT");
                 //console.log(this.$store.getters.get_auth);
-                const path = `/@articles`;
-                if (this.$route.path !== path) this.$router.push(path)
+                //const path = `/@articles`;
+                //if (this.$route.path !== path) this.$router.push(path)
                 //console.log("MAIN INDEX MOUNTED");
                 //this.nav_ixd = Math.random();
                 //this.$router.push({ name: 'guestindex' });

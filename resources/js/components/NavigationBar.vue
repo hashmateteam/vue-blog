@@ -19,6 +19,7 @@
                 <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
               </div>
               <header-profile v-if="auth" v-bind:key="header_profile"></header-profile>
+              <button class="dropdown-item" @click="create_article()" v-if="!notLogin">Create Article</button>
               <router-link to="/auth-in" v-if="notLogin" class="dropdown-item" v-bind:key="authin"><i class="fas fa-lock-open"></i> Login</router-link>
               <router-link to="/auth-up" v-if="notLogin" class="dropdown-item" v-bind:key="authup"><i class="fas fa-user"></i> Register</router-link>
               <button class="dropdown-item" @click="logout()" v-if="!notLogin"><i class="fas fa-power"></i> Sign Out</button>
@@ -52,6 +53,16 @@
             this.authin = Math.random();
             this.authup = Math.random();
             this.header_profile = Math.random();
+          },
+          create_article(){
+            let uri = "/api/init_article";
+            var data = {client_xid : Math.random()};
+            const xhr = this.$store.getters.get_headers;
+            this.axios.post(uri,data,xhr).then((response)=>{
+              console.log(response);
+              const path = '/u/@' + this.$store.getters.get_auth_user.username + '/' + response.data.xid;
+              this.$router.push({ path:path });
+            });
           }
         },
         mounted() {

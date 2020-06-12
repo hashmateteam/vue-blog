@@ -25,4 +25,6 @@ Route::get('articles', 'API\ArticleController@index');
 
 Route::group(['middleware' => 'auth:api'], function(){
       Route::post('authcx', 'API\UserController@authcx');
+      Route::post('init_article','API\ArticleController@init');
+      Route::post('get_article','API\ArticleController@get');
 });

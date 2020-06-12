@@ -17,9 +17,10 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('title');
-            $table->longText('description');
-            $table->string('image_src');
+            $table->string('xid')->unique();
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('image_src')->nullable();
             $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });

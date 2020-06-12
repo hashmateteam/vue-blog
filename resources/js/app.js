@@ -16,12 +16,18 @@ import axios from 'axios';
 import VueCookie from 'vue-cookie';
 import moment from 'moment';
 import VueCarousel from 'vue-carousel';
+import editor from 'vue2-medium-editor';
+import MediumEditor from 'medium-editor';
+
+//that how we use external libraries
+Object.defineProperty(Vue.prototype, '$editor', { value: MediumEditor });
 
 //Use or intitalize the basic libraries
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueCookie);
 Vue.use(VueCarousel);
+Vue.component('medium-editor', { editor });
 //Shared State Veux store
 import store from "./store";
 
@@ -31,6 +37,23 @@ Vue.filter('format_date', function(value) {
         return moment(String(value)).format('MMMM Do YYYY, h:mm:ss a');
     }
 });
+
+//directive two-ways
+Vue.directive('example', {
+    twoWay: true,
+    bind: function() {
+        this.handler = function() {
+            // set data back to the vm.
+            // If the directive is bound as v-example="a.b.c",
+            // this will attempt to set `vm.a.b.c` with the
+            // given value.
+            this.set(this.el.innerHTML)
+        }.bind(this)
+    },
+    unbind: function() {
+
+    }
+})
 
 //Components
 import AuthinWrapper from './interfaces/AuthinWrapper.vue';
@@ -79,7 +102,10 @@ const routes = [{
 const router = new VueRouter({ mode: 'history', routes: routes });
 
 //Initialize the Vue app 
-const app = new Vue(Vue.util.extend({ router, store }, Index)).$mount('#app');
+const app = new Vue(Vue.util.extend({
+    router,
+    store
+}, Index)).$mount('#app');
 
 //getting token from cookies before loading any component
 let token = app.$cookie.get("authentication_token");

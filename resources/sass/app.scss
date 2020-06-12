@@ -90,23 +90,24 @@
 
 
 /* ############### FONTS IMPORT ############### */
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800');
 @import url('https://fonts.googleapis.com/css?family=Archivo:400,500,600,700');
-
 // Bootstrap variable overrides
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 
 /* ############### BOOTSTRAP FRAMEWORK ############### */
-@import "~bootstrap/scss/bootstrap";
 
+@import "~bootstrap/scss/bootstrap";
 // Custom variables and mixins
 @import "custom/variables";
 @import "custom/mixins";
 
 /* ########## BOOTSTRAP OVERRIDES ########## */
+
 @import "bootstrap/accordion";
 @import "bootstrap/alerts";
 @import "bootstrap/buttons";
@@ -124,6 +125,7 @@
 @import "bootstrap/tooltip";
 
 /* ############### CUSTOM VENDOR STYLES ############### */
+
 @import "lib/datatables";
 @import "lib/datepicker";
 @import "lib/jquery-steps";
@@ -137,6 +139,7 @@
 @import "lib/spectrum";
 
 /* ############### CUSTOM ELEMENT STYLES ############### */
+
 @import "custom/buttons";
 @import "custom/charts";
 @import "custom/forms";
@@ -146,6 +149,7 @@
 @import "custom/nav";
 
 /* ############### PAGE LAYOUT STYLES ############### */
+
 @import "layout/content";
 @import "layout/footer";
 @import "layout/global";
@@ -156,8 +160,8 @@
 @import "layout/sidebar";
 
 /* ############### TEMPLATE STYLES ############### */
-@import "template/demo";
 
+@import "template/demo";
 @import "template/calendar";
 @import "template/chat";
 @import "template/contacts";
@@ -169,6 +173,7 @@
 @import "template/error";
 
 /* ############### DASHBOARD STYLES ############### */
+
 @import "template/dashboard-one";
 @import "template/dashboard-two";
 @import "template/dashboard-three";
@@ -181,6 +186,7 @@
 @import "template/dashboard-ten";
 
 /* ############### UTILITIES/HELPER CLASSES ############### */
+
 @import "util/background";
 @import "util/border";
 @import "util/height";

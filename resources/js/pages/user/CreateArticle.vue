@@ -1,5 +1,11 @@
 <template>
-    <div>{{ article.title }} {{ article.description }}</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 contenteditable="true" v-title:titlechange="article.title" v-html="article.title" style="color:#000" v-bind="article.title"> {{ article.title === null ? ' Title' : article.title }}</h1>  
+            </div>        
+        </div>
+    </div>
 </template>
 
 <style>
@@ -11,11 +17,13 @@
     }
 </style>
 <script>
+
     export default {
-        data : ()=>({
-            article:{},
-            xid : ''
-        }),
+        data: () => ({
+                article:{},
+                xid : ''
+            }),
+
         created () {
             this.xid = this.$route.params.xid;
         },
@@ -32,6 +40,32 @@
                 });
             });
             console.log('create_article with x_id '+this.xid+' mounted.');
-        }
+        },
+        methods : {
+            titlechange(){
+                alert("K");
+            }
+        },
+        directives: {
+            title: {
+                // directive definition
+                inserted: function (el) {
+                    el.focus()
+                },
+                update: function (el, binding, vnode) {
+                    binding.arg()
+                    /*
+                    var s = JSON.stringify
+                    el.innerHTML =
+                    'name: '       + s(binding.name) + '<br>' +
+                    'value: '      + s(binding.value) + '<br>' +
+                    'expression: ' + s(binding.expression) + '<br>' +
+                    'argument: '   + s(binding.arg) + '<br>' +
+                    'modifiers: '  + s(binding.modifiers) + '<br>' +
+                    'vnode keys: ' + Object.keys(vnode).join(', ')
+                    */
+                }
+            }
+        },
     }
 </script>

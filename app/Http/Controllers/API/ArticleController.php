@@ -27,12 +27,18 @@ class ArticleController extends Controller {
         $xid = str_replace($dontcare, "", $xid);
         $xid = substr($xid,-14);
         return response()->json(Article::create([
-          'user_id' => $user->id,'xid' => $xid
+          'user_id' => $user->id,'xid' => $xid,'title'=>'Title ...','description' => 'Description ...'
         ]));
     }
     public function get(Request $request){
         //return response()->json($request);
-        $article = Article::where('xid', $request->input('xid'))->get();
-        return response()->json($article[0]);
+        $article = Article::where('xid', $request->input('xid'))->first();
+        return response()->json($article);
+    }
+    public function update(Request $request){
+        $article = Article::where('xid', $request->input('xid'))->first();
+        $article->title = $request->input('title');
+        $article->description = $request->input('description');
+        return response()->json($article->save());
     }
 }

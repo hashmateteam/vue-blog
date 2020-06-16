@@ -34,6 +34,7 @@ const mutations = {
     RESET_TOKEN(state, payload) {
         state.authorization.status = false;
         state.authorization.token = '';
+        state.xhr_request.headers.Authorization = '';
     }
 };
 

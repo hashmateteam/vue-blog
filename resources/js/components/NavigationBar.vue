@@ -4,6 +4,7 @@
         <div class="az-header-left">
           <router-link to="/@articles" class="az-logo">a<span>rti</span>cles</router-link>
           <a href="" id="azNavShow" class="az-header-menu-icon d-lg-none"><span></span></a>
+          <span v-if="article_state !== null" class="mt-2 ml-5 pr-5">{{ article_state }}</span>
         </div><!-- az-header-left -->
         <div class="az-navbar az-navbar-three">
           <div></div>
@@ -39,7 +40,7 @@
           authup : '2',
           header_profile : '3'
         }),
-        props: [],
+        props: ['article_state'],
         components : {
           'header-profile' : HeaderProfile
         },

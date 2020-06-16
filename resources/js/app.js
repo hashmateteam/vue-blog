@@ -10,7 +10,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 //Importing basic libraries
-import VueRouter from 'vue-router';
+import router from './router'
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import VueCookie from 'vue-cookie';
@@ -23,7 +23,6 @@ import MediumEditor from 'medium-editor';
 Object.defineProperty(Vue.prototype, '$editor', { value: MediumEditor });
 
 //Use or intitalize the basic libraries
-Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VueCookie);
 Vue.use(VueCarousel);
@@ -40,21 +39,24 @@ Vue.filter('format_date', function(value) {
 
 //directive two-ways
 Vue.directive('example', {
-    twoWay: true,
-    bind: function() {
-        this.handler = function() {
-            // set data back to the vm.
-            // If the directive is bound as v-example="a.b.c",
-            // this will attempt to set `vm.a.b.c` with the
-            // given value.
-            this.set(this.el.innerHTML)
-        }.bind(this)
-    },
-    unbind: function() {
-
-    }
-})
-
+        twoWay: true,
+        bind: function() {
+            this.handler = function() {
+                // set data back to the vm.
+                // If the directive is bound as v-example="a.b.c",
+                // this will attempt to set `vm.a.b.c` with the
+                // given value.
+                this.set(this.el.innerHTML)
+            }.bind(this)
+            this.el.addEventListener('input', this.handler)
+        },
+        unbind: function() {
+            this.el.removeEventListener('input', this.handler)
+        }
+    })
+    //Pages
+import Index from './pages/Index.vue';
+/*
 //Components
 import AuthinWrapper from './interfaces/AuthinWrapper.vue';
 import AuthupWrapper from './interfaces/AuthupWrapper.vue';
@@ -99,8 +101,8 @@ const routes = [{
 ];
 
 //make VueRouter by routes-array
-const router = new VueRouter({ mode: 'history', routes: routes });
-
+//const router = new VueRouter({ mode: 'history', routes: routes });
+*/
 //Initialize the Vue app 
 const app = new Vue(Vue.util.extend({
     router,
@@ -112,8 +114,4 @@ let token = app.$cookie.get("authentication_token");
 if (token !== null) {
     app.$store.dispatch("update_token", String(token));
     app.$store.dispatch("update_auth_user", Object(JSON.parse(app.$cookie.get("auth_user"))));
-    //console.log("token recieved from cookies");
-    //console.log(token);
-    //console.log("user object recieved from cookies");
-    //console.log(app.$cookie.get("auth_user"));
 }

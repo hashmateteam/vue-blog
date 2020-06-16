@@ -1,19 +1,23 @@
-// App.vue
-
 <template>
-    <div class="az-content">
-        <div class="container">
-            <carousel :per-page="1" v-bind:key="corousal_ixd" :autoplay="true" :loop="true">
-                <slide v-for="article in articles" v-bind:key="article.id">
-                    <slide-card :object="article"></slide-card>
-                </slide>
-            </carousel>
-        </div>
-        <div class="container">
-            <card-container :cardlist="articles"></card-container>
-        </div>
-        <div class="d-flex justify-content-center">
-            <i class="fas fa-angle-double-down" v-if="loadmore" @click="load_more()"></i>
+    <div>
+        <nav-bar v-bind:key="nav_ixd"></nav-bar>
+        <div class="az-content">
+            <div class="container">
+                
+                <!--
+                <carousel :per-page="1" v-bind:key="corousal_ixd" :autoplay="true" :loop="true">
+                    <slide v-for="article in articles" v-bind:key="article.id">
+                        <slide-card :object="article"></slide-card>
+                    </slide>
+                </carousel>
+                -->
+            </div>
+            <div class="container">
+                <card-container :cardlist="articles"></card-container>
+            </div>
+            <div class="d-flex justify-content-center">
+                <i class="fas fa-angle-double-down" v-if="loadmore" @click="load_more()"></i>
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +32,7 @@
 </style>
 
 <script>
+    import NavigationBar from '../../components/NavigationBar.vue';
     import MediaObject from '../../components/MediaObject';
     import CardContainer from '../../components/CardContainer';
     import SlideCard from "../../components/SlideCard";
@@ -39,6 +44,7 @@
             next_uri : '',
             cardlist : [],
             corousal_ixd : 1,
+            nav_ixd : Math.random(),
         }),
         mounted(){
             this.$nextTick(() => {
@@ -82,7 +88,8 @@
         components :{
             'media-object'   : MediaObject,
             'card-container' : CardContainer,
-            'slide-card'           : SlideCard
+            'slide-card'           : SlideCard,
+            'nav-bar'    : NavigationBar
         }
     }
 </script>

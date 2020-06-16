@@ -1,12 +1,9 @@
 // Index.vue
 
 <template>
-    <div>
-        <nav-bar v-bind:key="nav_ixd"></nav-bar>
         <transition name="fade">
-        <router-view></router-view>
+            <router-view></router-view>
         </transition>
-    </div>
 </template>
 
 <style>
@@ -19,12 +16,9 @@
 </style>
 
 <script>
-    import NavigationBar from '../components/NavigationBar.vue';
-    import GuestIndex from './guest/Index.vue';
     export default{
         data: () => ({
             csrf  : document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            nav_ixd : Math.random()
         }),
         mounted(){
             this.$nextTick(() => {
@@ -54,10 +48,6 @@
                     }
                 });
             }
-        },
-        components: {
-            'guest-index': GuestIndex,
-            'nav-bar'    : NavigationBar
         }
     }
 </script>

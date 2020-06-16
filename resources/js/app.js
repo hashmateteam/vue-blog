@@ -16,17 +16,18 @@ import axios from 'axios';
 import VueCookie from 'vue-cookie';
 import moment from 'moment';
 import VueCarousel from 'vue-carousel';
-import editor from 'vue2-medium-editor';
-import MediumEditor from 'medium-editor';
+//import editor from 'vue2-medium-editor';
+//import MediumEditor from 'medium-editor';
+
 
 //that how we use external libraries
-Object.defineProperty(Vue.prototype, '$editor', { value: MediumEditor });
+//Object.defineProperty(Vue.prototype, '$editor', { value: MediumEditor });
 
 //Use or intitalize the basic libraries
 Vue.use(VueAxios, axios);
 Vue.use(VueCookie);
 Vue.use(VueCarousel);
-Vue.component('medium-editor', { editor });
+//Vue.component('editor', { editor });
 //Shared State Veux store
 import store from "./store";
 

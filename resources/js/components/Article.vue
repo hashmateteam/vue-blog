@@ -16,7 +16,7 @@
             </div><!-- media -->
             <h4 class="mg-t-15" style="word-break: break-all;color:#000;padding-left: 50px;padding-right: 50px;">{{ object.title }}</h4>
         </div><!-- card-body -->
-        <div class="card-footer bd-t" style="background-color: #fcfcfc;padding-bottom: 50px;border-bottom-left-radius: 49px;border-bottom-right-radius: 50px;">
+        <div class="card-footer bd-t" style="padding-bottom: 50px;border-bottom-left-radius: 49px;border-bottom-right-radius: 50px;">
             <div v-html="object.description" style="color:#000;padding-left: 20px;padding-right: 20px;padding-top: 25px;"></div>
         </div>
         </div><!-- card -->

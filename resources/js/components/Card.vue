@@ -7,7 +7,7 @@
         </div><!-- card-header -->
         <div class="card-body">
             <div class="media" style="margin-top:20px;">
-            <div class="coin-logo bg-gray-500" style="margin-left: 20px;"><i class="cf cf-eth"></i></div>
+            <div class="az-img-user bg-gray-500" style="margin-left: 20px;"><img src="https://via.placeholder.com/500x500"></div>
             <div class="media-body">
                 <h5 style="color:#000;padding-top: 12px;padding-left: 15px;">Bilal Punjabi</h5>
                 <h6>{{ object.created_at | format_date }}</h6>

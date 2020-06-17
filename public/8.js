@@ -262,7 +262,6 @@ var render = function() {
           {
             staticClass: "card-footer bd-t",
             staticStyle: {
-              "background-color": "#fcfcfc",
               "padding-bottom": "50px",
               "border-bottom-left-radius": "49px",
               "border-bottom-right-radius": "50px"

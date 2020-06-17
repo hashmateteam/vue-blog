@@ -458,10 +458,10 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "coin-logo bg-gray-500",
+        staticClass: "az-img-user bg-gray-500",
         staticStyle: { "margin-left": "20px" }
       },
-      [_c("i", { staticClass: "cf cf-eth" })]
+      [_c("img", { attrs: { src: "https://via.placeholder.com/500x500" } })]
     )
   }
 ]

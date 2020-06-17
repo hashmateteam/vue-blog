@@ -37,6 +37,11 @@ Vue.filter('format_date', function(value) {
         return moment(String(value)).format('MMMM Do YYYY, h:mm:ss a');
     }
 });
+Vue.filter('format_text', function(value) {
+    if (value) {
+        return value.substr(0, 45);
+    }
+});
 
 //directive two-ways
 Vue.directive('example', {

@@ -1,5 +1,5 @@
 <template>
-    <div class="row row-sm">
+    <div class="row row-sm mg-b-20">
         <card v-for="card in cardlist" v-bind:key="card.id" :object="card"></card>
     </div>
 </template>

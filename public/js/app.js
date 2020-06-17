@@ -75907,6 +75907,11 @@ Vue.filter('format_date', function (value) {
   if (value) {
     return moment__WEBPACK_IMPORTED_MODULE_4___default()(String(value)).format('MMMM Do YYYY, h:mm:ss a');
   }
+});
+Vue.filter('format_text', function (value) {
+  if (value) {
+    return value.substr(0, 45);
+  }
 }); //directive two-ways
 
 Vue.directive('example', {

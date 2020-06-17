@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav-bar v-bind:key="nav_ixd"></nav-bar>
-        <div class="az-content">
+        <div class="az-content pd-y-20">
             <div class="container">
                 
                 <!--
@@ -11,13 +11,20 @@
                     </slide>
                 </carousel>
                 -->
+            
+                <div class="az-content-body">
+                    <div class="d-flex flex-row justify-content-center mg-b-20">
+                        <div class="col-sm-6 col-lg-8 mg-t-20">
+                            <card-container :cardlist="articles"></card-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <i class="fas fa-angle-double-down" v-if="loadmore" @click="load_more()"></i>
+                </div>
             </div>
-            <div class="container">
-                <card-container :cardlist="articles"></card-container>
-            </div>
-            <div class="d-flex justify-content-center">
-                <i class="fas fa-angle-double-down" v-if="loadmore" @click="load_more()"></i>
-            </div>
+            
+            
         </div>
     </div>
 </template>

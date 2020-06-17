@@ -90,7 +90,11 @@
                         //console.log(this.articles);
                     });
                 }
-            }
+            },
+            view_article(username,xid){
+                const path = '/articles/@' + username + '/' + xid;
+                this.$router.push({ path:path });
+            },
         },
         components :{
             'media-object'   : MediaObject,

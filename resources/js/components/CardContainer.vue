@@ -12,6 +12,12 @@
         },
         mounted() {
             //console.log('card-container mounted.')
-        }
+        },
+        methods:{
+            view_article(username,xid){
+                const path = '/articles/@' + username + '/' + xid;
+                this.$router.push({ path:path });
+            },
+        },
     }
 </script>

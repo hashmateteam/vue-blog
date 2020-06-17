@@ -47,6 +47,14 @@ class ArticleController extends Controller {
         $article->image_src = asset("/storage/".$article->image_src);
         return response()->json($article);
     }
+    public function view(Request $request){
+        $article = Article::where([
+            ['xid',$request->input('xid')],
+            ['is_publish',1]
+        ])->first();
+        $article->image_src = asset("/storage/".$article->image_src);
+        return response()->json($article);
+    }
     public function update(Request $request){
         $user = Auth::user();
         $article = Article::where([

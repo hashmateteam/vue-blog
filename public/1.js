@@ -36,26 +36,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['object'],
   mounted: function mounted() {//console.log('card mounted.')
@@ -430,9 +410,9 @@ var render = function() {
               { staticClass: "tx-right", staticStyle: { float: "right" } },
               [
                 _vm._v(
-                  "\r\n                        " +
+                  "\n                " +
                     _vm._s(_vm.object.views) +
-                    "\r\n                        "
+                    "\n                "
                 ),
                 _c("i", { staticClass: "fa fa-eye fa-2x mg-l-5 mg-r-5" })
               ]

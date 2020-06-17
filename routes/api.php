@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:api'], function(){
       Route::post('authcx', 'API\UserController@authcx');
       Route::post('init_article','API\ArticleController@init');
       Route::post('get_article','API\ArticleController@get');
+      Route::post('view_article','API\ArticleController@view');
       Route::post('update_article','API\ArticleController@update');
       Route::post('publish_article','API\ArticleController@publish');
       Route::post('upload_image','API\ArticleController@upload_image');

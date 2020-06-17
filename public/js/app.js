@@ -76154,11 +76154,11 @@ var AuthupWrapper = function AuthupWrapper() {
 
 
 var Index = function Index() {
-  return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../pages/Index.vue */ "./resources/js/pages/Index.vue"));
+  return Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../pages/Index */ "./resources/js/pages/Index.vue"));
 };
 
 var GuestIndex = function GuestIndex() {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../pages/guest/Index.vue */ "./resources/js/pages/guest/Index.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ../pages/guest/Index */ "./resources/js/pages/guest/Index.vue"));
 };
 
 var UserIndex = function UserIndex() {
@@ -76167,6 +76167,10 @@ var UserIndex = function UserIndex() {
 
 var CreateArticle = function CreateArticle() {
   return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ../pages/user/CreateArticle */ "./resources/js/pages/user/CreateArticle.vue"));
+};
+
+var ViewArticle = function ViewArticle() {
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ../pages/guest/ViewArticle */ "./resources/js/pages/guest/ViewArticle.vue"));
 }; //Declare static-routes
 
 /*
@@ -76242,6 +76246,10 @@ function configRoutes() {
       name: 'createarticle',
       path: '/u/@:username/:xid',
       component: CreateArticle
+    }, {
+      name: 'viewarticle',
+      path: '/articles/@:username/:xid',
+      component: ViewArticle
     }]
   }];
 }

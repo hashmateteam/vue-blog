@@ -396,7 +396,8 @@ var render = function() {
                 _c("h6", [
                   _vm._v(_vm._s(_vm._f("format_date")(_vm.object.created_at)))
                 ])
-              ])
+              ]),
+              _vm._v("\n        git \n        ")
             ]
           ),
           _vm._v(" "),

@@ -12,7 +12,7 @@
                 <h5 style="color:#000;padding-top: 12px;padding-left: 15px;">Bilal Punjabi</h5>
                 <h6>{{ object.created_at | format_date }}</h6>
             </div><!-- media-body -->
-            
+            git 
             </div><!-- media -->
             <h4 class="mg-t-15" style="word-break: break-all;color:#000;padding-left: 50px;padding-right: 50px;" @click="view_article('bilalpunjabi786',object.xid)">{{ object.title }}</h4>
         </div><!-- card-body -->

@@ -13,8 +13,7 @@
 								</nav>
 								<div class="card-header-right">
 									<nav class="nav nav-pills">
-										<a href="" class="nav-link"><span>Preview</span><span>V</span></a>
-										<a @click="article_publish" class="nav-link active" :style="publish_style"><span>{{ article.is_publish == 1 ? 'Published' : 'Publish' }}</span><span>P</span></a>
+										<a @click="article_publish" class="nav-link active" :style="publish_style"><span>{{ article.is_publish == 1 ? 'Published' : 'Publish' }}</span><span>{{ article.is_publish == 1 ? 'Published' : 'Publish' }}</span></a>
 									</nav>
 								</div>
 								<!-- card-header-right -->
@@ -280,6 +279,13 @@
                     }else{
                         this.publish_style = "background-color: #969dab;color: #fff;";
                     }
+                    if(this.article.image_src != null){
+                        $('.file-upload-input').val('');
+                        $('.file-upload-content').show();
+                        $('.image-upload-wrap').hide();
+                        $('.file-upload-image').attr('src', this.article.image_src);
+                        $('.image-title').html('Current Cover Image');
+                    }
                 });
             });
             console.log('create_article with x_id '+this.xid+' mounted.');
@@ -329,6 +335,7 @@
                 });
             },
             readURL(e) {
+                //console.log("running");
                 const input = e.target; 
                 if (input.files && input.files[0]) {
 
@@ -342,7 +349,7 @@
                     };
 
                     reader.readAsDataURL(input.files[0]);
-                    
+                    this.article_status = "Uploading...";
                     let uri = '/api/upload_image';
                     const xhr  = this.$store.getters.get_headers;
                 
@@ -352,22 +359,36 @@
 
                     this.axios.post(uri,data,xhr).then(result => {
                         console.log(result);
+                        this.article_status = "Saved";
                         //let url = result.data.url; // Get url from response
                         //Editor.insertEmbed(cursorLocation, "image", url);
                         //resetUploader();
                         }).catch(err => {
                         console.log(err);
                         });
-
+                    //console.log("runned");
                 } else {
                     removeUpload();
                 }
             },
 
             removeUpload() {
-                $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+                $('.file-upload-input').val('');
                 $('.file-upload-content').hide();
                 $('.image-upload-wrap').show();
+                this.article_status = "Removing...";
+                let uri = '/api/delete_image';
+                const xhr  = this.$store.getters.get_headers;
+            
+                var data = new FormData();
+                data.append("xid", this.xid);
+
+                this.axios.post(uri,data,xhr).then(result => {
+                    console.log(result);
+                    this.article_status = "Saved";
+                }).catch(err => {
+                console.log(err);
+                });
             }
         },
         directives: {

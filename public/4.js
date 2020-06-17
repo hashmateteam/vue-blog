@@ -248,7 +248,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 // Advanced Use - Hook into Quill's API for Custom Functionality
 
 
@@ -297,6 +296,14 @@ __webpack_require__.r(__webpack_exports__);
           _this.publish_style = "background-color: #6610f2;color: #fff;";
         } else {
           _this.publish_style = "background-color: #969dab;color: #fff;";
+        }
+
+        if (_this.article.image_src != null) {
+          $('.file-upload-input').val('');
+          $('.file-upload-content').show();
+          $('.image-upload-wrap').hide();
+          $('.file-upload-image').attr('src', _this.article.image_src);
+          $('.image-title').html('Current Cover Image');
         }
       });
     });
@@ -353,6 +360,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     readURL: function readURL(e) {
+      var _this4 = this;
+
+      //console.log("running");
       var input = e.target;
 
       if (input.files && input.files[0]) {
@@ -366,26 +376,41 @@ __webpack_require__.r(__webpack_exports__);
         };
 
         reader.readAsDataURL(input.files[0]);
+        this.article_status = "Uploading...";
         var uri = '/api/upload_image';
         var xhr = this.$store.getters.get_headers;
         var data = new FormData();
         data.append("image", input.files[0]);
         data.append("xid", this.xid);
         this.axios.post(uri, data, xhr).then(function (result) {
-          console.log(result); //let url = result.data.url; // Get url from response
+          console.log(result);
+          _this4.article_status = "Saved"; //let url = result.data.url; // Get url from response
           //Editor.insertEmbed(cursorLocation, "image", url);
           //resetUploader();
         })["catch"](function (err) {
           console.log(err);
-        });
+        }); //console.log("runned");
       } else {
         removeUpload();
       }
     },
     removeUpload: function removeUpload() {
-      $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+      var _this5 = this;
+
+      $('.file-upload-input').val('');
       $('.file-upload-content').hide();
       $('.image-upload-wrap').show();
+      this.article_status = "Removing...";
+      var uri = '/api/delete_image';
+      var xhr = this.$store.getters.get_headers;
+      var data = new FormData();
+      data.append("xid", this.xid);
+      this.axios.post(uri, data, xhr).then(function (result) {
+        console.log(result);
+        _this5.article_status = "Saved";
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   },
   directives: {
@@ -489,8 +514,6 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "card-header-right" }, [
                       _c("nav", { staticClass: "nav nav-pills" }, [
-                        _vm._m(1),
-                        _vm._v(" "),
                         _c(
                           "a",
                           {
@@ -508,7 +531,15 @@ var render = function() {
                                 )
                               )
                             ]),
-                            _c("span", [_vm._v("P")])
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.article.is_publish == 1
+                                    ? "Published"
+                                    : "Publish"
+                                )
+                              )
+                            ])
                           ]
                         )
                       ])
@@ -534,7 +565,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _vm._m(2)
+                          _vm._m(1)
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "file-upload-content" }, [
@@ -649,7 +680,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(2)
                 ])
               ])
             ])
@@ -680,15 +711,6 @@ var staticRenderFns = [
         },
         [_vm._v("Cover Image")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "nav-link", attrs: { href: "" } }, [
-      _c("span", [_vm._v("Preview")]),
-      _c("span", [_vm._v("V")])
     ])
   },
   function() {

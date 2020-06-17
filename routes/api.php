@@ -29,5 +29,6 @@ Route::group(['middleware' => 'auth:api'], function(){
       Route::post('get_article','API\ArticleController@get');
       Route::post('update_article','API\ArticleController@update');
       Route::post('publish_article','API\ArticleController@publish');
-      Route::post('upload_image','API\ArticleController@image');
+      Route::post('upload_image','API\ArticleController@upload_image');
+      Route::post('delete_image','API\ArticleController@delete_image');
 });

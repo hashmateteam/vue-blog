@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use App\Article; 
 
@@ -20,7 +22,7 @@ class ArticleController extends Controller {
     public function index(){
         $articles = Article::where('is_publish',1)->latest()->paginate(10);
         foreach ($articles as $key => $article){
-            $article->image_src = asset($article->image_src);
+            $article->image_src = asset("/storage/".$article->image_src);
             $articles[$key] = $article;
         }
         return response()->json($articles);
@@ -42,6 +44,7 @@ class ArticleController extends Controller {
                 ['xid',$request->input('xid')],
                 ['user_id',$user->id]
             ])->first();
+        $article->image_src = asset("/storage/".$article->image_src);
         return response()->json($article);
     }
     public function update(Request $request){
@@ -63,14 +66,14 @@ class ArticleController extends Controller {
         $article->description = $request->input('description');
         return response()->json($article->save());
     }
-    public function image(Request $request){
+    public function upload_image(Request $request){
         $user = Auth::user();
         $article = Article::where([
             ['xid', $request->input('xid')],['user_id',$user->id]
         ])->first();
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
-                $article->image_src = $request->image->store('images');
+                $article->image_src = Str::after($request->image->store('public/images'),'public/');
                 return response()->json($article->save());
             }else{
                 return response()->json(["status"=>false,"reason"=>"invalid photo"]);
@@ -78,5 +81,18 @@ class ArticleController extends Controller {
         }else{
             return response()->json(["status"=>false,"reason"=>"file not attached"]);
         }
+    }
+    public function delete_image(Request $request){
+        $user = Auth::user();
+        $article = Article::where([
+            ['xid', $request->input('xid')],['user_id',$user->id]
+        ])->first();
+        if(Storage::exists('/public/'.$article->image_src)){
+            if(Storage::delete('/public/'.$article->image_src)){
+                $article->image_src = null;
+                return response()->json($article->save());
+            }
+        }
+        return response()->json(["status"=>false,"reason"=>"file not exist"]);
     }
 }

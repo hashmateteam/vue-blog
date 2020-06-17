@@ -28,4 +28,6 @@ Route::group(['middleware' => 'auth:api'], function(){
       Route::post('init_article','API\ArticleController@init');
       Route::post('get_article','API\ArticleController@get');
       Route::post('update_article','API\ArticleController@update');
+      Route::post('publish_article','API\ArticleController@publish');
+      Route::post('upload_image','API\ArticleController@image');
 });

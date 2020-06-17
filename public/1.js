@@ -324,9 +324,10 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { staticClass: "card-body bd bd-t-0" }, [
-        _c("p", { staticClass: "card-text" }, [
-          _vm._v(_vm._s(_vm.object.description))
-        ])
+        _c("p", {
+          staticClass: "card-text",
+          domProps: { innerHTML: _vm._s(_vm.object.description) }
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-footer bd-t" }, [

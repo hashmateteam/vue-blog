@@ -22,6 +22,7 @@ class CreateArticlesTable extends Migration
             $table->longText('description')->nullable();
             $table->string('image_src')->nullable();
             $table->unsignedBigInteger('views')->default(0);
+            $table->boolean('is_publish')->default(0);
             $table->timestamps();
         });
     }

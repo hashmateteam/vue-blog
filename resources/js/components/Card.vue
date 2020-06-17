@@ -4,7 +4,7 @@
                 <p class="card-text">{{ object.title }}</p>
                 <img class="img-fluid" :src="object.image_src" alt="Image">
                 <div class="card-body bd bd-t-0">
-                    <p class="card-text">{{ object.description }}</p>
+                    <p class="card-text" v-html="object.description"></p>
                 </div>
                 <div class="card-footer bd-t">
                     <span>

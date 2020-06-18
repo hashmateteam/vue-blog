@@ -9,10 +9,9 @@
             <div class="media" style="margin-top:20px;">
             <div class="az-img-user bg-gray-500" style="margin-left: 20px;"><img src="https://via.placeholder.com/500x500"></div>
             <div class="media-body">
-                <h5 style="color:#000;padding-top: 12px;padding-left: 15px;">Bilal Punjabi</h5>
+                <h5 style="color:#000;padding-top: 12px;padding-left: 15px;" @click="$router.push({path:'/u/@'+object.user.username+'/'})">{{ object.user.name }}</h5>
                 <h6>{{ object.created_at | format_date }}</h6>
             </div><!-- media-body -->
-            git 
             </div><!-- media -->
             <h4 class="mg-t-15" style="word-break: break-all;color:#000;padding-left: 50px;padding-right: 50px;" @click="view_article('bilalpunjabi786',object.xid)">{{ object.title }}</h4>
         </div><!-- card-body -->

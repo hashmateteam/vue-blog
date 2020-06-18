@@ -19,12 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                    <i class="fas fa-angle-double-down" v-if="loadmore" @click="load_more()"></i>
-                </div>
             </div>
-            
-            
         </div>
     </div>
 </template>
@@ -67,7 +62,8 @@
                 response.data.data.forEach(element => {
                     this.articles.push(element);
                 });
-                //console.log(this.articles);
+                console.log(this.articles);
+                this.scroll ();
             });
         },
         methods : {
@@ -87,9 +83,20 @@
                         response.data.data.forEach(element => {
                             this.articles.push(element);
                         });
-                        //console.log(this.articles);
+                        console.log(this.articles);
                     });
                 }
+            },
+            scroll () {
+                console.log("scroll is in action");
+                window.onscroll = () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+                if (bottomOfWindow) {
+                    console.log("scroll is in action again");
+                    this.load_more();
+                }
+                };
             },
             view_article(username,xid){
                 const path = '/articles/@' + username + '/' + xid;

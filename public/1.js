@@ -35,7 +35,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['object'],
   mounted: function mounted() {//console.log('card mounted.')
@@ -207,11 +206,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -243,7 +237,10 @@ __webpack_require__.r(__webpack_exports__);
 
       response.data.data.forEach(function (element) {
         _this.articles.push(element);
-      }); //console.log(this.articles);
+      });
+      console.log(_this.articles);
+
+      _this.scroll();
     });
   },
   methods: {
@@ -265,9 +262,25 @@ __webpack_require__.r(__webpack_exports__);
 
           response.data.data.forEach(function (element) {
             _this2.articles.push(element);
-          }); //console.log(this.articles);
+          });
+          console.log(_this2.articles);
         });
       }
+    },
+    scroll: function scroll() {
+      var _this3 = this;
+
+      console.log("scroll is in action");
+
+      window.onscroll = function () {
+        var bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+        if (bottomOfWindow) {
+          console.log("scroll is in action again");
+
+          _this3.load_more();
+        }
+      };
     },
     view_article: function view_article(username, xid) {
       var path = '/articles/@' + username + '/' + xid;
@@ -388,16 +401,22 @@ var render = function() {
                       color: "#000",
                       "padding-top": "12px",
                       "padding-left": "15px"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.push({
+                          path: "/u/@" + _vm.object.user.username + "/"
+                        })
+                      }
                     }
                   },
-                  [_vm._v("Bilal Punjabi")]
+                  [_vm._v(_vm._s(_vm.object.user.name))]
                 ),
                 _vm._v(" "),
                 _c("h6", [
                   _vm._v(_vm._s(_vm._f("format_date")(_vm.object.created_at)))
                 ])
-              ]),
-              _vm._v("\n        git \n        ")
+              ])
             ]
           ),
           _vm._v(" "),
@@ -638,19 +657,6 @@ var render = function() {
                 )
               ]
             )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex justify-content-center" }, [
-            _vm.loadmore
-              ? _c("i", {
-                  staticClass: "fas fa-angle-double-down",
-                  on: {
-                    click: function($event) {
-                      return _vm.load_more()
-                    }
-                  }
-                })
-              : _vm._e()
           ])
         ])
       ])

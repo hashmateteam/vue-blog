@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 use App\Article; 
+use App\User;
 
 class ArticleController extends Controller {
     public $successStatus = 200;
@@ -19,11 +20,22 @@ class ArticleController extends Controller {
      * @return \Illuminate\Http\Response 
      */ 
     
-    public function index(){
-        $articles = Article::where('is_publish',1)->latest()->paginate(10);
+    public function index(Request $request){
+        if($request->exists('user_id')){
+            $articles = User::where('id',$request->input('user_id'))->first()->articles()->where('is_publish',1)->latest()->paginate(5);
+            foreach ($articles as $key => $article){
+                $article->image_src = asset("/storage/".$article->image_src);
+                $articles[$key] = $article;
+                $articles[$key] = $article;
+                $articles[$key]->{'user'} = $article->user()->first();
+            }
+            return response()->json($articles);
+        }
+        $articles = Article::where('is_publish',1)->latest()->paginate(5);
         foreach ($articles as $key => $article){
             $article->image_src = asset("/storage/".$article->image_src);
             $articles[$key] = $article;
+            $articles[$key]->{'user'} = $article->user()->first();
         }
         return response()->json($articles);
     }

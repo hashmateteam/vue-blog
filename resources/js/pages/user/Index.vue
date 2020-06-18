@@ -51,19 +51,17 @@
         </div><!-- az-content-left -->
         <div class="az-content-body az-content-body-profile">
           <nav class="nav az-nav-line">
-            <a href="" class="nav-link active" data-toggle="tab">Articles</a>
-            <a href="" class="nav-link" data-toggle="tab">Followers</a>
+            <a href="" :class="(article_tab.status ? active : not_active)" @click="followers_tab.status = false;article_tab.status=true;" data-toggle="tab">Articles</a>
+            <a href="" :class="(followers_tab.status ? active : not_active)" @click="followers_tab.status = true;article_tab.status=false;" data-toggle="tab">Followers</a>
             <a href="" class="nav-link" data-toggle="tab">Following</a>
             <a href="" class="nav-link" data-toggle="tab">Recent Likes</a>
             <a href="" class="nav-link" data-toggle="tab">About</a>
           </nav>
 
           <div class="az-profile-body">
-
             <div class="row mg-b-20">
-              
+                <card-container :cardlist="articles" id="articles" v-if="article_tab.status"></card-container>
             </div><!-- row -->
-
             <!--<hr class="mg-y-40">-->
             <div class="mg-b-20"></div>
 
@@ -83,11 +81,24 @@
 </style>
 <script>
     import NavigationBar from '../../components/NavigationBar.vue';
+    import CardContainer from '../../components/CardContainer';
     export default {
         data: () => ({
             csrf     : document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             nav_ixd : Math.random(),
-            user : {}
+            user : {},
+            articles : [],
+            loadmore : false,
+            next_uri : '',
+            article_tab : {
+                status : true,
+            },
+            followers_tab : {
+                status : false,
+            },
+            active : 'nav-link active',
+            not_active : 'nav-link',
+            
         }),
         mounted() {
             this.$nextTick(() => { 
@@ -102,10 +113,62 @@
                     console.log(response);
                     this.user = response.data;
                 });
+                uri = '/api/articles';
+                var urlencoded = new URLSearchParams();
+                urlencoded.append("user_id", this.user.id);
+                var data = urlencoded;
+                
+                this.axios.get(uri,data).then((response) =>{
+                    console.log(response);
+                    if(response.data.current_page < response.data.last_page){
+                        this.loadmore = true;
+                        this.next_uri = response.data.next_page_url;
+                    }
+                    response.data.data.forEach(element => {
+                        this.articles.push(element);
+                    });
+                    console.log(this.articles);
+                    this.scroll();
+                });
             });
         },
         components:{
-            'nav-bar' : NavigationBar
-        }
+            'nav-bar' : NavigationBar,
+            'card-container' : CardContainer,
+        },
+        methods: {
+            scroll () {
+                console.log("scroll is in action");
+                window.onscroll = () => {
+                let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+                if (bottomOfWindow) {
+                    console.log("scroll is in action again");
+                    if(this.loadmore && this.article_tab.status){
+                        var urlencoded = new URLSearchParams();
+                        urlencoded.append("user_id", this.user.id);
+                        var data = urlencoded;
+                        
+                        let uri = this.next_uri;
+                        this.axios.get(uri,data).then((response) =>{
+                            //console.log(response);
+                            if(response.data.current_page < response.data.last_page){
+                                this.loadmore = true;
+                                this.next_uri = response.data.next_page_url;
+                                this.corousal_ixd++;
+                            }else{
+                                this.loadmore = false;
+                                this.corousal_ixd++;
+                            }
+                            response.data.data.forEach(element => {
+                                this.articles.push(element);
+                            });
+                            console.log(this.articles);
+                        });
+                    }
+                }
+                };
+            },
+        },
     }
 </script>

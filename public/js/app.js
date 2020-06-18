@@ -76145,11 +76145,11 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); //Components
 
 var AuthinWrapper = function AuthinWrapper() {
-  return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../interfaces/AuthinWrapper.vue */ "./resources/js/interfaces/AuthinWrapper.vue"));
+  return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ../interfaces/AuthinWrapper.vue */ "./resources/js/interfaces/AuthinWrapper.vue"));
 };
 
 var AuthupWrapper = function AuthupWrapper() {
-  return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ../interfaces/AuthupWrapper.vue */ "./resources/js/interfaces/AuthupWrapper.vue"));
+  return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ../interfaces/AuthupWrapper.vue */ "./resources/js/interfaces/AuthupWrapper.vue"));
 }; //Pages
 
 
@@ -76158,19 +76158,19 @@ var Index = function Index() {
 };
 
 var GuestIndex = function GuestIndex() {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ../pages/guest/Index */ "./resources/js/pages/guest/Index.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../pages/guest/Index */ "./resources/js/pages/guest/Index.vue"));
 };
 
 var UserIndex = function UserIndex() {
-  return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ../pages/user/Index */ "./resources/js/pages/user/Index.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ../pages/user/Index */ "./resources/js/pages/user/Index.vue"));
 };
 
 var CreateArticle = function CreateArticle() {
-  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ../pages/user/CreateArticle */ "./resources/js/pages/user/CreateArticle.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../pages/user/CreateArticle */ "./resources/js/pages/user/CreateArticle.vue"));
 };
 
 var ViewArticle = function ViewArticle() {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ../pages/guest/ViewArticle */ "./resources/js/pages/guest/ViewArticle.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../pages/guest/ViewArticle */ "./resources/js/pages/guest/ViewArticle.vue"));
 }; //Declare static-routes
 
 /*
@@ -76354,8 +76354,8 @@ var getters = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vue-laravel\vue-blog\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vue-laravel\vue-blog\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\laravel\vue-blog\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\laravel\vue-blog\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

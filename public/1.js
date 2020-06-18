@@ -39,6 +39,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['object'],
   mounted: function mounted() {//console.log('card mounted.')
+  },
+  methods: {
+    view_article: function view_article(username, xid) {
+      var path = '/articles/@' + username + '/' + xid;
+      this.$router.push({
+        path: path
+      });
+    }
   }
 });
 
@@ -66,6 +74,14 @@ __webpack_require__.r(__webpack_exports__);
     'card': _Card__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {//console.log('card-container mounted.')
+  },
+  methods: {
+    view_article: function view_article(username, xid) {
+      var path = '/articles/@' + username + '/' + xid;
+      this.$router.push({
+        path: path
+      });
+    }
   }
 });
 
@@ -252,6 +268,12 @@ __webpack_require__.r(__webpack_exports__);
           }); //console.log(this.articles);
         });
       }
+    },
+    view_article: function view_article(username, xid) {
+      var path = '/articles/@' + username + '/' + xid;
+      this.$router.push({
+        path: path
+      });
     }
   },
   components: {
@@ -374,7 +396,8 @@ var render = function() {
                 _c("h6", [
                   _vm._v(_vm._s(_vm._f("format_date")(_vm.object.created_at)))
                 ])
-              ])
+              ]),
+              _vm._v("\n        git \n        ")
             ]
           ),
           _vm._v(" "),
@@ -387,6 +410,11 @@ var render = function() {
                 color: "#000",
                 "padding-left": "50px",
                 "padding-right": "50px"
+              },
+              on: {
+                click: function($event) {
+                  return _vm.view_article("bilalpunjabi786", _vm.object.xid)
+                }
               }
             },
             [_vm._v(_vm._s(_vm.object.title))]
@@ -431,10 +459,10 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "coin-logo bg-gray-500",
+        staticClass: "az-img-user bg-gray-500",
         staticStyle: { "margin-left": "20px" }
       },
-      [_c("i", { staticClass: "cf cf-eth" })]
+      [_c("img", { attrs: { src: "https://via.placeholder.com/500x500" } })]
     )
   }
 ]

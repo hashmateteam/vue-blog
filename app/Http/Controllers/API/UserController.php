@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 use App\User; 
+use App\Article; 
+use App\Ul; 
+use App\Upl;
+use App\Uplc;
 
 class UserController extends Controller {
     public $successStatus = 200;
@@ -72,5 +76,27 @@ class UserController extends Controller {
         }else{
            return response()->json(false);
         }
-    } 
+    }
+    public function general_data(Request $request){
+        $validator = Validator::make($request->all(), [
+           'username' => 'required',
+        ]);
+        //return response()->json($validator->fails());
+        if ($validator->fails()) {
+            return response()->json($validator->errors(),202);
+        }
+        $user = User::where(["username"=>$request->input('username')])->first();
+        //$user->{'links'} = Ul::where(["user_id"=>$user->id])->get(); 
+        //$links = Ul::select(["value","upls_id"])->where(["user_id"=>$user->id])->get();
+        //$user->{'links'} = 
+        $links = $user->links()->select(['value','upls_id','id'])->get();
+        $user_links = array();
+        foreach($links as $link){
+            $possible_link = Upl::where("id",$link->upls_id)->first();
+            $possible_links_cat = Uplc::where("id",$possible_link->uplcs_id)->first();
+            array_push($user_links ,['id'=>$link->id,'name'=>$possible_link->name,'value'=>$link->value,'icon'=>$possible_link->icon,'category'=>$possible_links_cat->name]);
+        }
+        $user->{'links'} = $user_links;
+        return response()->json($user);
+    }
 }

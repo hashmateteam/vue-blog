@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class)->orderBy('created_at', 'DESC');
     }
+    public function links()
+    {
+        return $this->hasMany(Ul::class)->orderBy('created_at', 'DESC');
+    }
 }

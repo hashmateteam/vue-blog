@@ -16,7 +16,6 @@
               </div>
               <div class="btn-icon-list">
                 <button class="btn btn-indigo btn-icon"><i class="fa fa-plus fa-2x"></i></button>
-                <button class="btn btn-primary btn-icon"><i class="fa fa-terminal fa-2x"></i></button>
               </div>
             </div>
 

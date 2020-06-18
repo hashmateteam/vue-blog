@@ -177,7 +177,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -734,10 +733,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "btn-icon-list" }, [
       _c("button", { staticClass: "btn btn-indigo btn-icon" }, [
         _c("i", { staticClass: "fa fa-plus fa-2x" })
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-primary btn-icon" }, [
-        _c("i", { staticClass: "fa fa-terminal fa-2x" })
       ])
     ])
   }

@@ -31,29 +31,37 @@ Currently the Vue.js structure is as follows:
 .
 |
 |-app.js
-|-store.js
+|-store.js // this needs more attention
 |-bootstrap.js
 |
 |--|components|
-|--|components|-Article
-|--|components|-Card
-|--|components|-CardContainer
-|--|components|-FormAlert
-|--|components|-HeaderProfile
-|--|components|-MediaObject
-|--|components|-NavigationBar
-|--|components|-SlideCard
+|--|components|-Article : both ':' are similar but used in different modules like when user is authentication or not!
+|--|components|-Card    :
+|--|components|-CardContainer //this is just a wrapper or passer of data to {-|components|-Card}. this deserves an other identification!
+|--|components|-FormAlert    //for error showing, but its not so readily-available to use as a component. Moreover, Error handling is currently the issue
+|--|components|-HeaderProfile //header profile contains links to signin, register | user_info, logout it need some global modification of showing navbars activness changing
+|--|components|-MediaObject //this is currently not used, just a {-|components|-SlideCard} helper!
+|--|components|-NavigationBar //navigation bar ...
+|--|components|-SlideCard //not currently used, just a corusal!
 |
-|--|interfaces|-AuthinWrapper
-|--|interfaces|-AuthupWrapper
+|  //interfaces are just like pages but it doesn't have nivagation bar | you can say its a standalone pages with less component! includes signin,signup,404,..
+|--|interfaces|-AuthinWrapper // error showing need more time 
+|--|interfaces|-AuthupWrapper // error showing need more time
 |
-|--|pages|-Index
+|  //the structure inside braces needs major improvement in reusing the components or component dependencies on each other
+|  {
 |
-|--|pages|-|guest|-Index
-|--|pages|-|guest|-ViewArticle
-|--|pages|-|user|-Index
-|--|pages|-|user|-ViewProfile
-|--|pages|-|user|-CreateArticle
+|--|pages|-Index // must have a major role of defining the route but currently burried under sand!
+|
+|--|pages|-|guest|-Index //working showing public articles,posts
+|--|pages|-|guest|-ViewArticle //working 
+|--|pages|-|user|-Index // currently not decided what to show here
+|--|pages|-|user|-ViewProfile // working needs more components 
+|--|pages|-|user|-CreateArticle // working amazing need more ui elements 
+|  
+|  }
+|
+|  //Guardification of routes required
 |
 |--|router|-Index
 .

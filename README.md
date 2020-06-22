@@ -23,7 +23,7 @@ export() default {
 ```
 ## PROJECT_STATUS
 ```
-event occured <@> 9:37:00 PM 22.06.2020
+event occured <@> 9:37:00 PM 22.06.2020 -switch to branch = rewire
 ```
 Currently the Vue.js structure is as follows:
 ```

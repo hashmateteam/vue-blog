@@ -23,7 +23,10 @@ export() default {
 ```
 ## PROJECT_STATUS
 
+```
 event occured <@> 9:14:00 PM 22.06.2020
+```
+
 We have to create a pre-defined set of rules for getting and processing the data. Moreover, a global state has to be attached from all the components which is currenty not the case. We have to make :
 1. Global Authentication Holder with guarded routes
 2. Global Entities Getters,Mutators that will handled all the data we need with propers destruction when its not useful for better processing of things 

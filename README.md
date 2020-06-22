@@ -22,7 +22,43 @@ export() default {
 }
 ```
 ## PROJECT_STATUS
-
+```
+event occured <@> 9:37:00 PM 22.06.2020
+```
+Currently the Vue.js structure is as follows:
+```
+.
+.
+|
+|-app.js
+|-store.js
+|-bootstrap.js
+|
+|--|components|
+|--|components|-Article
+|--|components|-Card
+|--|components|-CardContainer
+|--|components|-FormAlert
+|--|components|-HeaderProfile
+|--|components|-MediaObject
+|--|components|-NavigationBar
+|--|components|-SlideCard
+|
+|--|interfaces|-AuthinWrapper
+|--|interfaces|-AuthupWrapper
+|
+|--|pages|-Index
+|
+|--|pages|-|guest|-Index
+|--|pages|-|guest|-ViewArticle
+|--|pages|-|user|-Index
+|--|pages|-|user|-ViewProfile
+|--|pages|-|user|-CreateArticle
+|
+|--|router|-Index
+.
+.
+```
 ```
 event occured <@> 9:14:00 PM 22.06.2020
 ```

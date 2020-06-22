@@ -231,8 +231,7 @@ var render = function() {
           {
             staticClass: "card-footer bd-t",
             staticStyle: {
-              "background-color": "#fcfcfc",
-              "padding-bottom": "50px",
+              "background-color": "#211e25",
               "border-bottom-left-radius": "49px",
               "border-bottom-right-radius": "50px"
             }
@@ -242,8 +241,11 @@ var render = function() {
               _c("span", {
                 class:
                   _vm.auth_user !== false
-                    ? " fa " + "" + " fa-2x " + " mg-t-15 mg-l-25"
-                    : "fa fa-heart-o fa-2x mg-t-15 mg-l-25",
+                    ? " fa " +
+                      "fa-heart-o" +
+                      " fa-2x " +
+                      " mg-t-15 pd-l-20 pd-b-20 pd-t-5"
+                    : "fa fa-heart-o fa-2x mg-t-15 pd-l-20 pd-b-20 pd-t-5",
                 on: {
                   click: function($event) {
                     _vm.auth_user !== false ? _vm.like(_vm.object.xid) : false
@@ -262,7 +264,8 @@ var render = function() {
             _vm._v(" "),
             _c("span", [
               _c("span", {
-                staticClass: "fa fa-comment-o fa-2x mg-t-15 mg-l-25"
+                staticClass:
+                  "fa fa-comment-o fa-2x mg-t-15 pd-l-20 pd-b-20 pd-t-5"
               }),
               _vm._v(" "),
               _c("strong", [
@@ -275,7 +278,9 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", [
-              _c("span", { staticClass: "fa fa-share fa-2x mg-t-15 mg-l-25" }),
+              _c("span", {
+                staticClass: "fa fa-share fa-2x mg-t-15 pd-l-20 pd-b-20 pd-t-5"
+              }),
               _vm._v(" "),
               _c("strong", [
                 _vm._v(

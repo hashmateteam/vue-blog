@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Article; 
 use App\User;
+use App\ArticleLike;
 
 class ArticleController extends Controller {
     public $successStatus = 200;
@@ -22,12 +23,18 @@ class ArticleController extends Controller {
     
     public function index(Request $request){
         if($request->exists('user_id')){
+            $user = Auth::user();
             $articles = User::where('id',$request->input('user_id'))->first()->articles()->where('is_publish',1)->latest()->paginate(5);
             foreach ($articles as $key => $article){
                 $article->image_src = asset("/storage/".$article->image_src);
                 $articles[$key] = $article;
-                $articles[$key] = $article;
                 $articles[$key]->{'user'} = $article->user()->first();
+                $articles[$key]->{'likes_array'} = $article->likes()->get();
+                $articles[$key]->{'auth_user_like'} = false;
+                if(ArticleLike::where([['article_id',$articles[$key]->id],['user_id',$user->id]])->count() > 0){
+                    $articles[$key]->auth_user_like = true;
+                }
+
             }
             return response()->json($articles);
         }
@@ -36,6 +43,8 @@ class ArticleController extends Controller {
             $article->image_src = asset("/storage/".$article->image_src);
             $articles[$key] = $article;
             $articles[$key]->{'user'} = $article->user()->first();
+            $articles[$key]->{'likes_array'} = $article->likes()->get();
+            $articles[$key]->{'auth_user_like'} = false;
         }
         return response()->json($articles);
     }
@@ -65,6 +74,7 @@ class ArticleController extends Controller {
             ['is_publish',1]
         ])->first();
         $article->image_src = asset("/storage/".$article->image_src);
+        $article->{'user'} = $article->user()->first();
         return response()->json($article);
     }
     public function update(Request $request){
@@ -114,5 +124,20 @@ class ArticleController extends Controller {
             }
         }
         return response()->json(["status"=>false,"reason"=>"file not exist"]);
+    }
+    public function like_article(Request $request){
+        $user = Auth::user();
+        $article = Article::where([
+            ['xid', $request->input('xid')],['user_id',$user->id]
+        ])->first();
+        if(ArticleLike::where([['article_id',$article->id],['user_id',$user->id]])->count() > 0){
+            return response()->json(false);
+        }
+        ArticleLike::create([
+            'article_id' => $article->id,
+            'user_id' => $user->id
+        ]);
+        $article->likes++;
+        return response()->json($article->save());
     }
 }

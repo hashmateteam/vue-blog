@@ -52,9 +52,12 @@
             this.$nextTick(() => {
                 //console.log("GUEST INDEX MOUNTED");
             });
+            if(this.$store.getters.get_auth.status){
+                
+            }
             let uri = '/api/articles';
             this.axios.get(uri).then((response) =>{
-                //console.log(response);
+                console.log(response);
                 if(response.data.current_page < response.data.last_page){
                     this.loadmore = true;
                     this.next_uri = response.data.next_page_url;

@@ -13,6 +13,7 @@ window.Vue = require('vue');
 import router from './router'
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+//import VueSocialauth from 'vue-social-auth';
 import VueCookie from 'vue-cookie';
 import moment from 'moment';
 import VueCarousel from 'vue-carousel';
@@ -108,6 +109,16 @@ const routes = [{
 
 //make VueRouter by routes-array
 //const router = new VueRouter({ mode: 'history', routes: routes });
+*/
+/*
+Vue.use(VueSocialauth, {
+    providers: {
+        github: {
+            clientId: '',
+            redirectUri: '/auth/github/callback' // Your client app URL
+        }
+    }
+})
 */
 //Initialize the Vue app 
 const app = new Vue(Vue.util.extend({

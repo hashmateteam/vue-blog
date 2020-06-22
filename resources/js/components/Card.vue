@@ -16,9 +16,26 @@
             <h4 class="mg-t-15" style="word-break: break-all;color:#000;padding-left: 50px;padding-right: 50px;" @click="view_article('bilalpunjabi786',object.xid)">{{ object.title }}</h4>
         </div><!-- card-body -->
         <div class="card-footer bd-t" style="background-color: #fcfcfc;padding-bottom: 50px;border-bottom-left-radius: 49px;border-bottom-right-radius: 50px;">
-                <span class="tx-right" style="float:right">
-                    {{ object.views }}
-                    <i class="fa fa-eye fa-2x mg-l-5 mg-r-5"></i>
+                <span>
+                    <span :class="(auth_user !== false ? (' fa ' + ('') + ' fa-2x '+ ' mg-t-15 mg-l-25'):'fa fa-heart-o fa-2x mg-t-15 mg-l-25')" @click="(auth_user !== false ? like(object.xid) : false)"></span>
+                    <!-- a strong element with the custom content, in this case a number -->
+                    <strong>
+                        {{ object.likes }}
+                    </strong>
+                </span>
+                <span>
+                    <span class="fa fa-comment-o fa-2x mg-t-15 mg-l-25"></span>
+                    <!-- a strong element with the custom content, in this case a number -->
+                    <strong>
+                        {{ object.comments }}
+                    </strong>
+                </span>
+                <span>
+                    <span class="fa fa-share fa-2x mg-t-15 mg-l-25"></span>
+                    <!-- a strong element with the custom content, in this case a number -->
+                    <strong>
+                        {{ object.shares }}
+                    </strong>
                 </span>
             </div>
         </div><!-- card -->
@@ -26,7 +43,7 @@
 </template>
 <script>
     export default {
-        props: ['object'],
+        props: ['object','auth_user'],
         mounted() {
             //console.log('card mounted.')
         },
@@ -35,6 +52,20 @@
                 const path = '/articles/@' + username + '/' + xid;
                 this.$router.push({ path:path });
             },
+            like(xid){
+                let uri = '/api/like_article';
+                const xhr  = this.$store.getters.get_headers;
+                //console.log(this.xid);
+                var urlencoded = new URLSearchParams();
+                urlencoded.append("xid", xid);
+                var data = urlencoded;
+                this.axios.post(uri,data,xhr).then((response)=>{
+                    console.log(response);
+                    if(response.data){
+                        this.object.likes++;
+                    }
+                });
+            }
         },
     }
 </script>

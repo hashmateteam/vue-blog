@@ -21,6 +21,18 @@ export() default {
     project_status : 'currently under_development',
 }
 ```
+## PROJECT_STATUS
+
+event occured <@> 9:14:00 PM 22.06.2020
+We have to create a pre-defined set of rules for getting and processing the data. Moreover, a global state has to be attached from all the components which is currenty not the case. We have to make :
+1. Global Authentication Holder with guarded routes
+2. Global Entities Getters,Mutators that will handled all the data we need with propers destruction when its not useful for better processing of things 
+3. Improving Structure of components dependencies on one another
+
+These three main tasks must fullfilled before moving on... but the situation is that it requires to re-wire,deep-constructing the whole project that cost time!
+
+working on these tasks!
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

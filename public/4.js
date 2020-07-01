@@ -77,7 +77,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      ss_authin_route: document.querySelector('meta[name="ss-authin-route"]').getAttribute('content'),
       user: {},
+      json_auth_status: false,
       error: {
         auth: {
           "status": false,
@@ -93,6 +95,8 @@ __webpack_require__.r(__webpack_exports__);
     this.$nextTick(function () {
       //console.log("mounting authin");
       //console.log((!(this.$store.getters.get_auth).status));
+      console.log('login route from server is:' + _this.ss_authin_route);
+
       if (_this.$store.getters.get_auth.status) {
         _this.$router.push({
           path: '/'
@@ -106,6 +110,10 @@ __webpack_require__.r(__webpack_exports__);
     authuser: function authuser() {
       var _this2 = this;
 
+      if (this.json_auth_status) {
+        return true;
+      }
+
       var uri = '/api/authin';
       this.axios.post(uri, this.user).then(function (response) {
         console.log(response);
@@ -117,14 +125,15 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$cookie.set("authentication_token", response.data.success.token);
 
-          _this2.$cookie.set("auth_user", JSON.stringify(response.data.user)); //console.log(this.$store.getters.get_token);
+          _this2.$cookie.set("auth_user", JSON.stringify(response.data.user));
+
+          _this2.json_auth_status = true;
+
+          _this2.$refs.authin_form.submit(); //console.log(this.$store.getters.get_token);
           //console.log(response.data.user);
           //console.log(this.$store.getters.get_auth_user);
+          //this.$router.push({ path:'/' });
 
-
-          _this2.$router.push({
-            path: '/'
-          });
         } else {
           for (var property in response.data) {
             _this2.error[property].type = typeof response.data[property] != "undefined" ? true : false;
@@ -240,6 +249,8 @@ var render = function() {
           _c(
             "form",
             {
+              ref: "authin_form",
+              attrs: { action: _vm.ss_authin_route },
               on: {
                 submit: function($event) {
                   $event.preventDefault()

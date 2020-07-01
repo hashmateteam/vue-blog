@@ -6,7 +6,7 @@
           <h2>Welcome back!</h2>
           <h4>Please sign in to continue</h4>
 
-          <form @submit.prevent="authuser">
+          <form @submit.prevent="authuser" :action="ss_authin_route" ref="authin_form">
             <input type="hidden" name="_token" :value="csrf">
             <div class="form-group">
               <label>Username</label>
@@ -35,7 +35,9 @@
     export default {
         data: () => ({
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            ss_authin_route : document.querySelector('meta[name="ss-authin-route"]').getAttribute('content'),
             user:{},
+            json_auth_status:false,
             error:{
                 auth : {"status":false,"message":"","type":true},
             },
@@ -44,6 +46,7 @@
              this.$nextTick(() => {
                //console.log("mounting authin");
                //console.log((!(this.$store.getters.get_auth).status));
+               console.log('login route from server is:' + this.ss_authin_route);
                 if((this.$store.getters.get_auth).status){
                   this.$router.push({ path: '/' });
                 }
@@ -53,6 +56,9 @@
         },
         methods: {
             authuser(){
+              if(this.json_auth_status){
+                return true;
+              }
                 let uri = '/api/authin';
                 this.axios.post(uri, this.user).then((response) => {
                     console.log(response);
@@ -61,10 +67,12 @@
                         this.$store.dispatch("update_auth_user", Object(response.data.user));
                         this.$cookie.set("authentication_token",response.data.success.token);
                         this.$cookie.set("auth_user",JSON.stringify(response.data.user));
+                        this.json_auth_status = true;
+                        this.$refs.authin_form.submit();
                         //console.log(this.$store.getters.get_token);
                         //console.log(response.data.user);
                         //console.log(this.$store.getters.get_auth_user);
-                        this.$router.push({ path:'/' });
+                        //this.$router.push({ path:'/' });
                     }else{
                       for ( var property in response.data ) {
                           this.error[property].type = ( typeof response.data[property] != "undefined" ? true : false );

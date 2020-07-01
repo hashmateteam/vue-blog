@@ -21,6 +21,8 @@ const CreateArticle = () =>
     import ('../pages/user/CreateArticle')
 const ViewArticle = () =>
     import ('../pages/guest/ViewArticle')
+const OauthClients = () =>
+    import ('../interfaces/OauthClients')
     //Declare static-routes
     /*
     const routes = [{
@@ -97,6 +99,11 @@ function configRoutes() {
                 name: 'viewarticle',
                 path: '/articles/@:username/:xid',
                 component: ViewArticle
+            },
+            {
+                name: 'oauth',
+                path: '/@oauth',
+                component: OauthClients
             }
         ]
     }]

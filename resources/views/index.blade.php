@@ -30,6 +30,7 @@
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="ss-authin-route" content="{{ route('login') }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -44,8 +45,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="az-body">
+    @yield('content')
     <div id="app">
-        @yield('content')
+        
     </div>
 </body>
 </html>

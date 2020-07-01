@@ -55,7 +55,7 @@
             authuser(){
                 let uri = '/api/authin';
                 this.axios.post(uri, this.user).then((response) => {
-                    //console.log(response);
+                    console.log(response);
                     if(response.status === 200){
                         this.$store.dispatch("update_token", String(response.data.success.token));
                         this.$store.dispatch("update_auth_user", Object(response.data.user));

@@ -23,30 +23,41 @@ class ArticleController extends Controller {
     
     public function index(Request $request){
         if($request->exists('user_id')){
-            $user = Auth::user();
+            $bool = false;
+            if(Auth::check()){
+                $user = Auth::user();
+                $bool = true;
+            }
             $articles = User::where('id',$request->input('user_id'))->first()->articles()->where('is_publish',1)->latest()->paginate(5);
             foreach ($articles as $key => $article){
                 $article->image_src = asset("/storage/".$article->image_src);
                 $articles[$key] = $article;
                 $articles[$key]->{'user'} = $article->user()->first();
                 $articles[$key]->{'likes_array'} = $article->likes()->get();
-                $articles[$key]->{'auth_user_like'} = false;
+                if($bool){
+                    if($article->likes()->where('user_id',$user->id)->count() > 0){
+                        $articles[$key]->{'auth_user_like'} = true;    
+                    }else{
+                        $articles[$key]->{'auth_user_like'} = false;
+                    }
+                }
                 if(ArticleLike::where([['article_id',$articles[$key]->id],['user_id',$user->id]])->count() > 0){
                     $articles[$key]->auth_user_like = true;
                 }
 
             }
             return response()->json($articles);
+        }else{
+            $articles = Article::where('is_publish',1)->latest()->paginate(5);
+            foreach ($articles as $key => $article){
+                $article->image_src = asset("/storage/".$article->image_src);
+                $articles[$key] = $article;
+                $articles[$key]->{'user'} = $article->user()->first();
+                $articles[$key]->{'likes_array'} = $article->likes()->get();
+                $articles[$key]->{'auth_user_like'} = true;
+            }
+            return response()->json($request->exists('user_id'));
         }
-        $articles = Article::where('is_publish',1)->latest()->paginate(5);
-        foreach ($articles as $key => $article){
-            $article->image_src = asset("/storage/".$article->image_src);
-            $articles[$key] = $article;
-            $articles[$key]->{'user'} = $article->user()->first();
-            $articles[$key]->{'likes_array'} = $article->likes()->get();
-            $articles[$key]->{'auth_user_like'} = false;
-        }
-        return response()->json($articles);
     }
     public function init(Request $request){
         $user = Auth::user();
@@ -130,7 +141,11 @@ class ArticleController extends Controller {
         $article = Article::where([
             ['xid', $request->input('xid')],['user_id',$user->id]
         ])->first();
-        if(ArticleLike::where([['article_id',$article->id],['user_id',$user->id]])->count() > 0){
+        $article_like = ArticleLike::where([['article_id',$article->id],['user_id',$user->id]])->get();
+        if($article_like->count() > 0){
+            ArticleLike::where([['article_id',$article->id],['user_id',$user->id]])->delete();
+            $article->likes--;
+            $article->save();
             return response()->json(false);
         }
         ArticleLike::create([

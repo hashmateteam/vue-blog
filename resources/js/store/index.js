@@ -1,46 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import api from '../api/index.js'
 Vue.use(Vuex);
-class XAPI {
-    call(payload) {
-        let uri = api.endpoint + payload.n_func;
-        if (payload.requirexhr) {
-
-        }
-    }
-}
-class User {
-    constructor() {}
-    authin(payload) {
-        var n_func = arguments.callee.toString();
-        n_func = n_func.substr('function '.length);
-        n_func = n_func.substr(0, n_func.indexOf('('));
-        let uri = '/api/' + n_func;
-
-        const xhr = this.$store.getters.get_headers;
-        console.log(this.xid);
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("xid", this.xid);
-        var data = urlencoded;
-        this.axios.post(uri, data, xhr).then((response) => {
-            console.log(response);
-            this.article = response.data;
-            if (this.article.is_publish) {
-                //this.publish_style = "background-color: #6610f2;color: #fff;";
-            } else {
-                //this.publish_style = "background-color: #969dab;color: #fff;";
-            }
-            if (this.article.image_src != null) {
-                //
-            }
-        });
-    }
-    authup() {
-
-    }
-}
-
+console.log(api.endpoint);
 const state = {
     authorization: {
         token: '',

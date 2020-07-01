@@ -108,7 +108,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var uri = '/api/authin';
       this.axios.post(uri, this.user).then(function (response) {
-        //console.log(response);
+        console.log(response);
+
         if (response.status === 200) {
           _this2.$store.dispatch("update_token", String(response.data.success.token));
 

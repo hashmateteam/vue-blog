@@ -75853,6 +75853,21 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/api/index.js":
+/*!***********************************!*\
+  !*** ./resources/js/api/index.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  endpoint: '/api/'
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -75873,7 +75888,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var vue_carousel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-carousel */ "./node_modules/vue-carousel/dist/vue-carousel.min.js");
 /* harmony import */ var vue_carousel__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_carousel__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _pages_Index_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Index.vue */ "./resources/js/pages/Index.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -75996,7 +76011,7 @@ Vue.use(VueSocialauth, {
 
 var app = new Vue(Vue.util.extend({
   router: _router__WEBPACK_IMPORTED_MODULE_0__["default"],
-  store: _store__WEBPACK_IMPORTED_MODULE_6__["default"]
+  store: _store_index__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, _pages_Index_vue__WEBPACK_IMPORTED_MODULE_7__["default"])).$mount('#app'); //getting token from cookies before loading any component
 
 var token = app.$cookie.get("authentication_token");
@@ -76170,15 +76185,15 @@ var Index = function Index() {
 };
 
 var GuestIndex = function GuestIndex() {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ../pages/guest/Index */ "./resources/js/pages/guest/Index.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../pages/guest/Index */ "./resources/js/pages/guest/Index.vue"));
 };
 
 var UserIndex = function UserIndex() {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ../pages/user/Index */ "./resources/js/pages/user/Index.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ../pages/user/Index */ "./resources/js/pages/user/Index.vue"));
 };
 
 var CreateArticle = function CreateArticle() {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(0), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../pages/user/CreateArticle */ "./resources/js/pages/user/CreateArticle.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(0), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../pages/user/CreateArticle */ "./resources/js/pages/user/CreateArticle.vue"));
 };
 
 var ViewArticle = function ViewArticle() {
@@ -76268,10 +76283,10 @@ function configRoutes() {
 
 /***/ }),
 
-/***/ "./resources/js/store.js":
-/*!*******************************!*\
-  !*** ./resources/js/store.js ***!
-  \*******************************/
+/***/ "./resources/js/store/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/index.js ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -76280,9 +76295,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/index.js */ "./resources/js/api/index.js");
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+console.log(_api_index_js__WEBPACK_IMPORTED_MODULE_2__["default"].endpoint);
 var state = {
   authorization: {
     token: '',

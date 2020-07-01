@@ -77,6 +77,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data) {
           _this.object.likes++;
+        } else {
+          _this.object.likes--;
         }
       });
     }

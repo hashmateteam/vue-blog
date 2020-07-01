@@ -63,6 +63,8 @@
                     console.log(response);
                     if(response.data){
                         this.object.likes++;
+                    }else{
+                        this.object.likes--;
                     }
                 });
             }

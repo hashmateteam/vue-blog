@@ -30,7 +30,7 @@ Vue.use(VueCookie);
 Vue.use(VueCarousel);
 //Vue.component('editor', { editor });
 //Shared State Veux store
-import store from "./store";
+import store from "./store/index";
 
 //filters
 Vue.filter('format_date', function(value) {

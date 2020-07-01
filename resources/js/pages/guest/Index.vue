@@ -52,11 +52,13 @@
             this.$nextTick(() => {
                 //console.log("GUEST INDEX MOUNTED");
             });
+            var urlencoded = new URLSearchParams();
             if(this.$store.getters.get_auth.status){
-                
+                urlencoded.append("user_id", this.$store.getters.get_auth_user.id);
             }
+            var data = urlencoded;
             let uri = '/api/articles';
-            this.axios.get(uri).then((response) =>{
+            this.axios.post(uri,data).then((response) =>{
                 console.log(response);
                 if(response.data.current_page < response.data.last_page){
                     this.loadmore = true;

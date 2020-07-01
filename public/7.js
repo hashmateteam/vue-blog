@@ -127,27 +127,28 @@ __webpack_require__.r(__webpack_exports__);
       _this.axios.post(uri, data, xhr).then(function (response) {
         console.log(response);
         _this.user = response.data;
-      });
+        uri = '/api/articles';
+        console.log(_this.user);
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("user_id", _this.user.id);
+        urlencoded.append("view", 'profile');
+        var data = urlencoded;
 
-      uri = '/api/articles';
-      var urlencoded = new URLSearchParams();
-      urlencoded.append("user_id", _this.user.id);
-      var data = urlencoded;
+        _this.axios.post(uri, data).then(function (response) {
+          console.log(response);
 
-      _this.axios.get(uri, data).then(function (response) {
-        console.log(response);
+          if (response.data.current_page < response.data.last_page) {
+            _this.loadmore = true;
+            _this.next_uri = response.data.next_page_url;
+          }
 
-        if (response.data.current_page < response.data.last_page) {
-          _this.loadmore = true;
-          _this.next_uri = response.data.next_page_url;
-        }
+          response.data.data.forEach(function (element) {
+            _this.articles.push(element);
+          });
+          console.log(_this.articles);
 
-        response.data.data.forEach(function (element) {
-          _this.articles.push(element);
+          _this.scroll();
         });
-        console.log(_this.articles);
-
-        _this.scroll();
       });
     });
   },

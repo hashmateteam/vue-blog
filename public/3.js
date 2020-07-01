@@ -336,10 +336,14 @@ var render = function() {
                     "div",
                     { staticClass: "row row-sm mg-b-20" },
                     [
-                      _c("article-card", {
-                        key: _vm.article.id,
-                        attrs: { object: _vm.article }
-                      })
+                      (_vm.article.user.username === _vm.$route.params.username
+                      ? true
+                      : false)
+                        ? _c("article-card", {
+                            key: _vm.article.id,
+                            attrs: { object: _vm.article }
+                          })
+                        : _vm._e()
                     ],
                     1
                   )

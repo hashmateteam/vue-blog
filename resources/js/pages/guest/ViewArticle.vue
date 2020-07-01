@@ -7,7 +7,7 @@
                     <div class="d-flex flex-row justify-content-center mg-b-20">
                         <div class="col-sm-10 col-lg-10 mg-t-20">
                             <div class="row row-sm mg-b-20">
-                                <article-card :object="article" v-bind:key="article.id" />
+                                <article-card v-if="(article.user.username === $route.params.username ? true : false)" :object="article" v-bind:key="article.id" />
                             </div>
                         </div>
                     </div>

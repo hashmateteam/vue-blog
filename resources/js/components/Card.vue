@@ -13,11 +13,11 @@
                 <h6>{{ object.created_at | format_date }}</h6>
             </div><!-- media-body -->
             </div><!-- media -->
-            <h4 class="mg-t-15" style="word-break: break-all;color:#000;padding-left: 50px;padding-right: 50px;" @click="view_article('bilalpunjabi786',object.xid)">{{ object.title }}</h4>
+            <h4 class="mg-t-15" style="word-break: break-all;color:#000;padding-left: 50px;padding-right: 50px;" @click="view_article(object.user.username,object.xid)">{{ object.title }}</h4>
         </div><!-- card-body -->
         <div class="card-footer bd-t" style="background-color: #211e25;border-bottom-left-radius: 49px;border-bottom-right-radius: 50px;">
                 <span>
-                    <span :class="(auth_user !== false ? (' fa ' + ('fa-heart-o') + ' fa-2x '+ ' mg-t-15 pd-l-20 pd-b-20 pd-t-5'):'fa fa-heart-o fa-2x mg-t-15 pd-l-20 pd-b-20 pd-t-5')" @click="(auth_user !== false ? like(object.xid) : false)"></span>
+                    <span :class="(object.auth_user_like !== false ? (' fa ' + ('fa-heart') + ' fa-2x '+ ' mg-t-15 pd-l-20 pd-b-20 pd-t-5'):'fa fa-heart-o fa-2x mg-t-15 pd-l-20 pd-b-20 pd-t-5')" @click="(auth_user !== false ? like(object.xid) : false)"></span>
                     <!-- a strong element with the custom content, in this case a number -->
                     <strong>
                         {{ object.likes }}
@@ -63,8 +63,10 @@
                     console.log(response);
                     if(response.data){
                         this.object.likes++;
+                        this.object.auth_user_like = true;
                     }else{
                         this.object.likes--;
+                        this.object.auth_user_like = false;
                     }
                 });
             }

@@ -77,8 +77,10 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data) {
           _this.object.likes++;
+          _this.object.auth_user_like = true;
         } else {
           _this.object.likes--;
+          _this.object.auth_user_like = false;
         }
       });
     }
@@ -220,7 +222,10 @@ var render = function() {
               },
               on: {
                 click: function($event) {
-                  return _vm.view_article("bilalpunjabi786", _vm.object.xid)
+                  return _vm.view_article(
+                    _vm.object.user.username,
+                    _vm.object.xid
+                  )
                 }
               }
             },
@@ -242,9 +247,9 @@ var render = function() {
             _c("span", [
               _c("span", {
                 class:
-                  _vm.auth_user !== false
+                  _vm.object.auth_user_like !== false
                     ? " fa " +
-                      "fa-heart-o" +
+                      "fa-heart" +
                       " fa-2x " +
                       " mg-t-15 pd-l-20 pd-b-20 pd-t-5"
                     : "fa fa-heart-o fa-2x mg-t-15 pd-l-20 pd-b-20 pd-t-5",

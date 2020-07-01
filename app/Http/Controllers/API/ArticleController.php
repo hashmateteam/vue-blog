@@ -23,28 +23,28 @@ class ArticleController extends Controller {
     
     public function index(Request $request){
         if($request->exists('user_id')){
-            $bool = false;
-            if(Auth::check()){
-                $user = Auth::user();
-                $bool = true;
+            if($request->exists('view')){
+                $user = User::where('id',$request->input('user_id'))->first();
+                //$articles = Article::where('is_publish',1)->latest()->paginate(5);
+                $articles = User::where('id',$request->input('user_id'))->first()->articles()->where('is_publish',1)->latest()->paginate(5);
+            }else{
+                $user = User::where('id',$request->input('user_id'))->first();
+                $articles = Article::where('is_publish',1)->latest()->paginate(5);
+                //$articles = User::where('id',$request->input('user_id'))->first()->articles()->where('is_publish',1)->latest()->paginate(5);
             }
-            $articles = User::where('id',$request->input('user_id'))->first()->articles()->where('is_publish',1)->latest()->paginate(5);
             foreach ($articles as $key => $article){
                 $article->image_src = asset("/storage/".$article->image_src);
                 $articles[$key] = $article;
                 $articles[$key]->{'user'} = $article->user()->first();
                 $articles[$key]->{'likes_array'} = $article->likes()->get();
-                if($bool){
-                    if($article->likes()->where('user_id',$user->id)->count() > 0){
-                        $articles[$key]->{'auth_user_like'} = true;    
-                    }else{
-                        $articles[$key]->{'auth_user_like'} = false;
-                    }
+                if($article->likes()->where('user_id',$user->id)->count() > 0){
+                    $articles[$key]->{'auth_user_like'} = true;    
+                }else{
+                    $articles[$key]->{'auth_user_like'} = false;
                 }
                 if(ArticleLike::where([['article_id',$articles[$key]->id],['user_id',$user->id]])->count() > 0){
                     $articles[$key]->auth_user_like = true;
                 }
-
             }
             return response()->json($articles);
         }else{
@@ -54,9 +54,9 @@ class ArticleController extends Controller {
                 $articles[$key] = $article;
                 $articles[$key]->{'user'} = $article->user()->first();
                 $articles[$key]->{'likes_array'} = $article->likes()->get();
-                $articles[$key]->{'auth_user_like'} = true;
+                $articles[$key]->{'auth_user_like'} = false;
             }
-            return response()->json($request->exists('user_id'));
+            return response()->json($articles);
         }
     }
     public function init(Request $request){

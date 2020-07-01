@@ -111,23 +111,25 @@
                 this.axios.post(uri,data,xhr).then((response)=>{
                     console.log(response);
                     this.user = response.data;
-                });
-                uri = '/api/articles';
-                var urlencoded = new URLSearchParams();
-                urlencoded.append("user_id", this.user.id);
-                var data = urlencoded;
-                
-                this.axios.get(uri,data).then((response) =>{
-                    console.log(response);
-                    if(response.data.current_page < response.data.last_page){
-                        this.loadmore = true;
-                        this.next_uri = response.data.next_page_url;
-                    }
-                    response.data.data.forEach(element => {
-                        this.articles.push(element);
+                    uri = '/api/articles';
+                    console.log(this.user);
+                    var urlencoded = new URLSearchParams();
+                    urlencoded.append("user_id", this.user.id);
+                    urlencoded.append("view", 'profile');
+                    var data = urlencoded;
+                    
+                    this.axios.post(uri,data).then((response) =>{
+                        console.log(response);
+                        if(response.data.current_page < response.data.last_page){
+                            this.loadmore = true;
+                            this.next_uri = response.data.next_page_url;
+                        }
+                        response.data.data.forEach(element => {
+                            this.articles.push(element);
+                        });
+                        console.log(this.articles);
+                        this.scroll();
                     });
-                    console.log(this.articles);
-                    this.scroll();
                 });
             });
         },
